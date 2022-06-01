@@ -1,5 +1,3 @@
-import './Auth.css'
-
 import SignIn from "./SignIn"
 import SignUp from "./SignUp"
 
