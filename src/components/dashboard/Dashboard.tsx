@@ -1,5 +1,5 @@
-import React from "react";
-import { getCurrentUser } from "../../services/Auth.service";
+import React from 'react';
+import { getCurrentUser } from '../../services/Auth.service';
 const Dashboard: React.FC = () => {
   const currentUser = getCurrentUser();
   return (
@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
         </h3>
       </header>
       <p>
-        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
+        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{' '}
         {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
       </p>
       <p>
@@ -22,7 +22,9 @@ const Dashboard: React.FC = () => {
       <strong>Authorities:</strong>
       <ul>
         {currentUser.roles &&
-          currentUser.roles.map((role: string, index: number) => <li key={index}>{role}</li>)}
+          currentUser.roles.map((role: string, index: number) => (
+            <li key={index}>{role}</li>
+          ))}
       </ul>
     </div>
   );

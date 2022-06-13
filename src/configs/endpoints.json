@@ -1,6 +1,6 @@
 {
-    "user": {
-        "signUp": "/users/signup/",
-        "signIn": "/users/signin/"
-    }
+  "user": {
+    "signUp": "/users/signup/",
+    "signIn": "/users/signin/"
+  }
 }
