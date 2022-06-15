@@ -1,33 +1,34 @@
 import React from 'react';
-import { getCurrentUser } from '../../services/Auth.service';
+import { useAuth } from '../../hooks/useAuth';
+
 const Dashboard: React.FC = () => {
-  const currentUser = getCurrentUser();
-  return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>
-          <strong>{currentUser.username}</strong> Profile
-        </h3>
-      </header>
-      <p>
-        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{' '}
-        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-      </p>
-      <p>
-        <strong>Id:</strong> {currentUser.id}
-      </p>
-      <p>
-        <strong>Email:</strong> {currentUser.email}
-      </p>
-      <strong>Authorities:</strong>
-      <ul>
-        {currentUser.roles &&
-          currentUser.roles.map((role: string, index: number) => (
-            <li key={index}>{role}</li>
-          ))}
-      </ul>
-    </div>
-  );
+  const auth = useAuth();
+  console.log(auth);
+
+  if (auth && auth.user) {
+    console.log(auth.user);
+    return (
+      <>
+        <header className="jumbotron">
+          <h3>
+            <strong>{auth.user.email}</strong> Profile
+          </h3>
+        </header>
+        <p>
+          <strong>Token:</strong> {auth.user.accessToken.substring(0, 20)} ...{' '}
+          {auth.user.accessToken.substr(auth.user.accessToken.length - 20)}
+        </p>
+        <p>
+          <strong>Id:</strong> {auth.user.id}
+        </p>
+        <p>
+          <strong>Email:</strong> {auth.user.email}
+        </p>
+      </>
+    );
+  }
+
+  return null;
 };
 
 export default Dashboard;

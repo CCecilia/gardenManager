@@ -3,7 +3,9 @@ import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 
-import { login } from '../../services/Auth.service';
+import { AxiosError } from 'axios';
+import { useAuth } from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   history: string[];
@@ -13,9 +15,10 @@ type InputValues = {
   password: string;
 };
 
-const Login: React.FC<Props> = ({ history }) => {
+const SignIn: React.FC<Props> = ({ history }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
+  const navigate = useNavigate();
   const initialValues: InputValues = {
     email: '',
     password: '',
@@ -24,12 +27,14 @@ const Login: React.FC<Props> = ({ history }) => {
     email: Yup.string().required('This field is required!'),
     password: Yup.string().required('This field is required!'),
   });
+  const auth = useAuth();
 
   const handleLogin = async (formValue: InputValues) => {
     const { email, password } = formValue;
     setMessage('');
     setLoading(true);
-    await login(email, password).catch((error) => {
+    await auth?.signIn(email, password).catch((error: AxiosError<{ message: string }>) => {
+      console.error(error);
       const resMessage =
         (error.response &&
           error.response.data &&
@@ -39,6 +44,7 @@ const Login: React.FC<Props> = ({ history }) => {
       setLoading(false);
       setMessage(resMessage);
     });
+    navigate('/dashboard');
   };
 
   return (
@@ -94,4 +100,4 @@ const Login: React.FC<Props> = ({ history }) => {
   );
 };
 
-export default Login;
+export default SignIn;

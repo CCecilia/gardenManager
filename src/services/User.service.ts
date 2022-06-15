@@ -1,1 +1,5 @@
-export const temp = true;
+export interface UserModel {
+    id: string,
+    email: string,
+    accessToken: string,
+};

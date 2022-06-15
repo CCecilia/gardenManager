@@ -3,12 +3,16 @@ import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 
+import { AxiosError } from 'axios';
 import { IUser } from '../../types/User.type';
-import { register } from '../../services/Auth.service';
+import { useAuth } from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
-const Register: React.FC = () => {
+const SignUp: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
+  const auth = useAuth();
+  const navigate = useNavigate();
   const initialValues: IUser = {
     email: '',
     password: '',
@@ -30,7 +34,7 @@ const Register: React.FC = () => {
 
   const handleRegister = async (formValue: IUser) => {
     const { email, password } = formValue;
-    const response = await register(email, password).catch((error) => {
+    await auth?.signUp(email, password).catch((error: AxiosError<{message: string}>) => {
       const resMessage =
         (error.response &&
           error.response.data &&
@@ -40,15 +44,15 @@ const Register: React.FC = () => {
       setMessage(resMessage);
       setSuccessful(false);
     });
-    setMessage(response!.data.message);
+    setMessage('success');
     setSuccessful(true);
-    window.location.assign('/dashboard');
+    navigate('/dashboard');
   };
 
   return (
     <div className="col-md-12">
       <div className="card card-container">
-        <h3>Register</h3>
+        <h3>SignUp</h3>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -105,4 +109,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default SignUp;

@@ -1,29 +1,19 @@
 import './NavBar.scss';
 
-import * as AuthService from '../../services/Auth.service';
-
-import React, {useEffect, useState} from 'react';
-
-import { IUser } from '../../types/User.type';
 import { Link } from 'react-router-dom';
+import React from 'react';
+import { useAuth } from '../../hooks/useAuth';
 
 type Props = {
 }
 
 const NavBar: React.FC<Props> = () => {
-  const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
+  const auth = useAuth();
+  let authorizedLinks = false;
 
-  useEffect(() => {
-    const user = AuthService.getCurrentUser();
-    if (user) {
-      setCurrentUser(user);
-    }
-  }, []);
-
-  const logOut = () => {
-    AuthService.logout();
-    setCurrentUser(undefined);
-  };
+  if (auth && auth.user) {
+    authorizedLinks = true;
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-between fixed-top">
@@ -39,33 +29,31 @@ const NavBar: React.FC<Props> = () => {
               <span className="sr-only">Home</span>
             </Link>
           </li>
-          {currentUser && (
-            <li className="nav-item">
-              <Link to={'/user'} className="nav-link">
-                <span className="sr-only">User</span>
-              </Link>
-            </li>
-          )}
-          {currentUser ? (
-            <>
+          <>
+            {authorizedLinks ?
+              <>
               <li className="nav-item">
-                <Link to={'/dashboard'} className="nav-link">
-                  <span className="sr-only">{currentUser.email}</span>
+                <Link to={'/user'} className="nav-link">
+                  <span className="sr-only">User</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="/login" className="nav-link" onClick={logOut}>
+                <Link to={'/dashboard'} className="nav-link">
+                  <span className="sr-only">DashBoard</span>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <a href="/login" className="nav-link" onClick={auth!.signOut}>
                   <span className="sr-only">LogOut</span>
                 </a>
               </li>
               <li className="nav-item">
                 <form className="form-inline my-2 my-lg-0">
-                  <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                  <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                   <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
               </li>
-            </>
-          ): (
+            </> :
               <>
                 <li className="nav-item">
                   <Link to={'/login'} className="nav-link">
@@ -78,7 +66,8 @@ const NavBar: React.FC<Props> = () => {
                   </Link>
                 </li>
               </>
-          )}
+            }
+          </>
         </ul>
       </div>
     </nav>
