@@ -22,7 +22,7 @@ const NavBar: React.FC<Props> = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <div className=" navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
             <Link to={'/home'} className="nav-link">

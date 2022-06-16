@@ -3,23 +3,23 @@ import './App.scss';
 
 import { Route, Routes } from 'react-router-dom';
 
-import Dashboard from './components/dashboard';
+import Dashboard from './components/dashBoard';
+import Header from './components/header';
 import Home from './components/home';
-import NavBar from './components/navbar';
 import { ProvideAuth } from './hooks/useAuth';
 import React from 'react';
+import SideBar from './components/sideBar';
 import SignIn from './components/signIn';
 import SignUp from './components/signUp';
 
 const App: React.FC = () => {
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
         <ProvideAuth>
-          <div className='col-12'>
-            <NavBar></NavBar>
-          </div>
-          <div className="col-12">
+          <Header></Header>
+          <SideBar></SideBar>
+          <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <Routes>
               <Route path={'/'} element={<Home />} />
               <Route path="/login" element={<SignIn history={['']} />} />
@@ -27,7 +27,7 @@ const App: React.FC = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/home" element={<Home />} />
             </Routes>
-          </div>
+          </main>
         </ProvideAuth>
       </div>
     </div>
