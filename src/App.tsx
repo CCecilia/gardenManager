@@ -22,8 +22,8 @@ const App: React.FC = () => {
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <Routes>
               <Route path={'/'} element={<Home />} />
-              <Route path="/login" element={<SignIn history={['']} />} />
-              <Route path="/register" element={<SignUp />} />
+              <Route path="/signIn" element={<SignIn />} />
+              <Route path="/signUp" element={<SignUp />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/home" element={<Home />} />
             </Routes>

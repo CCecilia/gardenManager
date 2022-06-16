@@ -7,15 +7,13 @@ import { AxiosError } from 'axios';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {
-  history: string[];
-};
+type Props = {};
 type InputValues = {
   email: string;
   password: string;
 };
 
-const SignIn: React.FC<Props> = ({ history }) => {
+const SignIn: React.FC<Props> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ const SignIn: React.FC<Props> = ({ history }) => {
   });
   const auth = useAuth();
 
-  const handleLogin = async (formValue: InputValues) => {
+  const handleSignIn = async (formValue: InputValues) => {
     const { email, password } = formValue;
     setMessage('');
     setLoading(true);
@@ -53,7 +51,7 @@ const SignIn: React.FC<Props> = ({ history }) => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleLogin}
+          onSubmit={handleSignIn}
         >
           <Form>
             <div className="form-group">
