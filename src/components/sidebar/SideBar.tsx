@@ -1,8 +1,9 @@
 import './SideBar.scss';
 
+import { faCoffee, faTree } from '@fortawesome/free-solid-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../hooks/useAuth';
 
 type Props = {}
@@ -18,7 +19,7 @@ const SideBar: React.FC<Props> = () => {
     <div className="col-md-12">
       <div className="d-flex flex-column flex-shrink-0 bg-light side-bar-small-width">
         <a href="/" className="d-block p-3 link-dark text-decoration-none" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
-          <FontAwesomeIcon icon={faCoffee} />
+          <FontAwesomeIcon icon={faTree} />
           <span className="visually-hidden">Icon-only</span>
         </a>
         <ul className="nav nav-pills nav-flush flex-column mb-auto text-center">

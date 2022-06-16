@@ -14,7 +14,7 @@ import SignUp from './components/signUp';
 
 const App: React.FC = () => {
   return (
-    <div className="container">
+    <div className="container remove-all-margin">
       <div className="row">
         <ProvideAuth>
           <div className='col-12'>
