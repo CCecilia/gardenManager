@@ -16,7 +16,7 @@ const NavBar: React.FC<Props> = () => {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-between fixed-top">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light  fixed-top">
       <Link to={'/home'} className="nav-text-main">GardenManager</Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
@@ -29,9 +29,8 @@ const NavBar: React.FC<Props> = () => {
               <span className="sr-only">Home</span>
             </Link>
           </li>
-          <>
-            {authorizedLinks ?
-              <>
+          {authorizedLinks ?
+            <>
               <li className="nav-item">
                 <Link to={'/user'} className="nav-link">
                   <span className="sr-only">User</span>
@@ -54,20 +53,19 @@ const NavBar: React.FC<Props> = () => {
                 </form>
               </li>
             </> :
-              <>
-                <li className="nav-item">
-                  <Link to={'/login'} className="nav-link">
-                    <span className="sr-only">Login</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/register'} className="nav-link">
-                    <span className="sr-only">Sign Up</span>
-                  </Link>
-                </li>
-              </>
-            }
-          </>
+            <>
+              <li className="nav-item">
+                <Link to={'/login'} className="nav-link">
+                  <span className="sr-only">Login</span>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={'/register'} className="nav-link">
+                  <span className="sr-only">Sign Up</span>
+                </Link>
+              </li>
+            </>
+          }
         </ul>
       </div>
     </nav>

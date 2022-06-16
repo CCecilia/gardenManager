@@ -8,22 +8,18 @@ import Home from './components/home';
 import NavBar from './components/navbar';
 import { ProvideAuth } from './hooks/useAuth';
 import React from 'react';
-import SideBar from './components/sidebar';
 import SignIn from './components/signIn';
 import SignUp from './components/signUp';
 
 const App: React.FC = () => {
   return (
-    <div className="container remove-all-margin">
+    <div className="container">
       <div className="row">
         <ProvideAuth>
           <div className='col-12'>
             <NavBar></NavBar>
           </div>
-          <div className='col-1'>
-            <SideBar></SideBar>
-          </div>
-          <div className="col-11">
+          <div className="col-12">
             <Routes>
               <Route path={'/'} element={<Home />} />
               <Route path="/login" element={<SignIn history={['']} />} />
