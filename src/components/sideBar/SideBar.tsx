@@ -14,17 +14,28 @@ const SideBar: React.FC<Props> = () => {
   }
 
   return (
-    <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <nav
+      id="sidebarMenu"
+      className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+    >
       <div className="position-sticky pt-3">
         <ul className="nav flex-column">
           <li className="nav-item">
-            <Link to={'/dashboard'} className="nav-link active" aria-current="page">
+            <Link
+              to={'/dashboard'}
+              className="nav-link active"
+              aria-current="page"
+            >
               <FontAwesomeIcon icon={faCoffee} />
               &nbsp; Crops
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={'/plants'} className="nav-link active" aria-current="page">
+            <Link
+              to={'/plants'}
+              className="nav-link active"
+              aria-current="page"
+            >
               <FontAwesomeIcon icon={faCoffee} />
               &nbsp; Plants
             </Link>
@@ -39,13 +50,21 @@ const SideBar: React.FC<Props> = () => {
         </h6>
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
-            <Link to={'/dashboard'} className="nav-link active" aria-current="page">
+            <Link
+              to={'/dashboard'}
+              className="nav-link active"
+              aria-current="page"
+            >
               <FontAwesomeIcon icon={faCoffee} />
               &nbsp; DashBoard
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={'/dashboard'} className="nav-link active" aria-current="page">
+            <Link
+              to={'/dashboard'}
+              className="nav-link active"
+              aria-current="page"
+            >
               <FontAwesomeIcon icon={faCoffee} />
               &nbsp; DashBoard
             </Link>
@@ -57,7 +76,11 @@ const SideBar: React.FC<Props> = () => {
             </a>
           </li>
           <li className="nav-item">
-            <Link to={'/dashboard'} className="nav-link active" aria-current="page">
+            <Link
+              to={'/dashboard'}
+              className="nav-link active"
+              aria-current="page"
+            >
               <FontAwesomeIcon icon={faCoffee} />
               &nbsp; DashBoard
             </Link>

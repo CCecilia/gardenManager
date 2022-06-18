@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 
 import { IPlant } from '../../types/Plant.interface';
@@ -6,18 +6,19 @@ import { getPlantData } from '../../services/Plant.service';
 import { titleCase } from '../../utilities/Typography';
 import { useLocation } from 'react-router-dom';
 
-type Props = {
-};
+type Props = {};
 
 interface InputValues {
   commonName?: string;
+  id?: string;
 }
 
 const PlantDetails: React.FC<Props> = () => {
   const location = useLocation();
   const [plantData, setPlantData] = useState<IPlant | null>(null);
   const initialValues: InputValues = {
-    commonName: plantData?.commonName
+    commonName: plantData?.commonName,
+    id: plantData?._id,
   };
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const PlantDetails: React.FC<Props> = () => {
       const { pathname } = location;
       // eslint-disable-next-line no-unused-vars
       const [_empty, _base, id] = pathname.split('/');
-      const data = await getPlantData(id) as IPlant;
+      const data = (await getPlantData(id)) as IPlant;
 
       setPlantData(data);
     })();
@@ -42,20 +43,30 @@ const PlantDetails: React.FC<Props> = () => {
         }}
       >
         <Form>
-          <div className="row">
-            <div className="col">
-              <Field id="commonName" name="commonName" placeholder={plantData ? titleCase(plantData.commonName) : 'Common Name'} className="form-control" />
-              <ErrorMessage
+          <div className="form-row">
+            <div className="form-group col-6">
+              <label htmlFor="commonName">Common Name</label>
+              <Field
+                id="commonName"
                 name="commonName"
-                component="div"
-                className="alert alert-danger"
+                placeholder={
+                  plantData ? titleCase(plantData.commonName) : 'Common Name'
+                }
+                className="form-control"
               />
             </div>
-            <div className='col'>
-              <h3>Id: {plantData ? plantData._id : ''}</h3>
+            <div className="form-group col-6">
+              <label htmlFor="id">ID</label>
+              <Field
+                id="id"
+                name="id"
+                placeholder={plantData ? titleCase(plantData._id) : 'ID'}
+                className="form-control"
+                readOnly={true}
+              />
             </div>
-            <button type="submit">Submit</button>
           </div>
+          <div className=""></div>
         </Form>
       </Formik>
     </>
@@ -63,4 +74,3 @@ const PlantDetails: React.FC<Props> = () => {
 };
 
 export default PlantDetails;
-

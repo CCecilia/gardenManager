@@ -1,13 +1,11 @@
 import React from 'react';
 
 type Props = {
-  header: string
+  header: string;
 };
 
-const TableHeader: React.FC<Props> = ({header}) => {
-  return (
-    <th scope="col">{header}</th>
-  );
+const TableHeader: React.FC<Props> = ({ header }) => {
+  return <th scope="col">{header}</th>;
 };
 
 export default TableHeader;

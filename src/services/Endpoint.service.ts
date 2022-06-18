@@ -11,15 +11,18 @@ export default class EndpointService {
 
   get signUp(): string {
     return this.baseUri + this.endpoints.user.signUp;
-  };
+  }
 
   get signIn(): string {
     return this.baseUri + this.endpoints.user.signIn;
-  };
+  }
 
   getPlantDataById(id: string): string {
-    return this.baseUri + this.endpoints.plant.getPlantDataById.replace('{{plantId}}', id);
-  };
+    return (
+      this.baseUri +
+      this.endpoints.plant.getPlantDataById.replace('{{plantId}}', id)
+    );
+  }
 
   get allPlantData(): string {
     return this.baseUri + this.endpoints.plant.getAllPlantData;

@@ -6,12 +6,11 @@ import axios from 'axios';
 import { getHeaders } from '../services/Header.service';
 
 interface AuthContextInterface {
-  user: UserModel | null,
-  signIn: (email: string, password: string) => Promise<void>,
-  signUp: (email: string, password: string) => Promise<void>,
+  user: UserModel | null;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<void>;
   signOut: () => void;
 }
-
 
 const AuthContext = createContext<AuthContextInterface | null>(null);
 
@@ -21,7 +20,7 @@ export const ProvideAuth = ({ children }: any) => {
 };
 
 export const useAuth = () => {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 };
 
 export const useProvideAuth = () => {
@@ -62,7 +61,7 @@ export const useProvideAuth = () => {
 
     if (response.data) {
       const userData = response.data;
-      
+
       localStorage.setItem('user', JSON.stringify(response.data));
       setUser(userData);
     }
@@ -77,13 +76,13 @@ export const useProvideAuth = () => {
     const userStr = localStorage.getItem('user');
     if (userStr) {
       setUser(JSON.parse(userStr));
-    };
+    }
   }, []);
 
   return {
     user,
     signIn,
     signUp,
-    signOut
+    signOut,
   };
 };

@@ -31,17 +31,19 @@ const SignIn: React.FC<Props> = () => {
     const { email, password } = formValue;
     setMessage('');
     setLoading(true);
-    await auth?.signIn(email, password).catch((error: AxiosError<{ message: string }>) => {
-      console.error(error);
-      const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      setLoading(false);
-      setMessage(resMessage);
-    });
+    await auth
+      ?.signIn(email, password)
+      .catch((error: AxiosError<{ message: string }>) => {
+        console.error(error);
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setLoading(false);
+        setMessage(resMessage);
+      });
     navigate('/dashboard');
   };
 

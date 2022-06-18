@@ -10,7 +10,7 @@ const Crops: React.FC = () => {
 
   return (
     <>
-      <div className='row'>
+      <div className="row">
         <h3>Crops</h3>
       </div>
     </>

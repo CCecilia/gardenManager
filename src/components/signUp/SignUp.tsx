@@ -34,16 +34,18 @@ const SignUp: React.FC = () => {
 
   const handleRegister = async (formValue: IUser) => {
     const { email, password } = formValue;
-    await auth?.signUp(email, password).catch((error: AxiosError<{message: string}>) => {
-      const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      setMessage(resMessage);
-      setSuccessful(false);
-    });
+    await auth
+      ?.signUp(email, password)
+      .catch((error: AxiosError<{ message: string }>) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setMessage(resMessage);
+        setSuccessful(false);
+      });
     setMessage('success');
     setSuccessful(true);
     navigate('/dashboard');

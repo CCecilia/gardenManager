@@ -3,11 +3,7 @@ import React from 'react';
 type Props = {};
 
 const AddPlant: React.FC<Props> = () => {
-  return (
-    <>
-      
-    </>
-  );
+  return <></>;
 };
 
 export default AddPlant;
