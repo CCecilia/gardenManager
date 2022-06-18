@@ -3,9 +3,12 @@ import './App.scss';
 
 import { Route, Routes } from 'react-router-dom';
 
+import AddPlant from './components/addPlant';
 import Dashboard from './components/dashBoard';
 import Header from './components/header';
 import Home from './components/home';
+import PlantDetails from './components/plantDetails';
+import Plants from './components/plants';
 import { ProvideAuth } from './hooks/useAuth';
 import React from 'react';
 import SideBar from './components/sideBar';
@@ -26,6 +29,9 @@ const App: React.FC = () => {
               <Route path="/signUp" element={<SignUp />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/addPlant" element={<AddPlant />} />
+              <Route path="/plants" element={<Plants />} />
+              <Route path="/plant/:id" element={<PlantDetails />} />
             </Routes>
           </main>
         </ProvideAuth>

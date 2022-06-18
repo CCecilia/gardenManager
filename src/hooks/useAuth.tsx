@@ -29,7 +29,6 @@ export const useProvideAuth = () => {
   const endpointService = new EndpointService();
 
   const signIn = async (email: string, password: string) => {
-    console.log('signin useAuth', email, password);
     const response = await axios.post(
       endpointService.signIn,
       JSON.stringify({
@@ -43,8 +42,8 @@ export const useProvideAuth = () => {
 
     if (response.data) {
       const userData = response.data;
+
       localStorage.setItem('user', JSON.stringify(response.data));
-      console.log('setting user data ', userData);
       setUser(userData);
     }
   };
@@ -63,8 +62,8 @@ export const useProvideAuth = () => {
 
     if (response.data) {
       const userData = response.data;
+      
       localStorage.setItem('user', JSON.stringify(response.data));
-      console.log('setting user data ', userData);
       setUser(userData);
     }
   };

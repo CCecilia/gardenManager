@@ -20,37 +20,13 @@ const SideBar: React.FC<Props> = () => {
           <li className="nav-item">
             <Link to={'/dashboard'} className="nav-link active" aria-current="page">
               <FontAwesomeIcon icon={faCoffee} />
-              &nbsp; DashBoard
+              &nbsp; Crops
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={'/dashboard'} className="nav-link active" aria-current="page">
+            <Link to={'/plants'} className="nav-link active" aria-current="page">
               <FontAwesomeIcon icon={faCoffee} />
-              &nbsp; DashBoard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={'/dashboard'} className="nav-link active" aria-current="page">
-              <FontAwesomeIcon icon={faCoffee} />
-              &nbsp; DashBoard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={'/dashboard'} className="nav-link active" aria-current="page">
-              <FontAwesomeIcon icon={faCoffee} />
-              &nbsp; DashBoard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={'/dashboard'} className="nav-link active" aria-current="page">
-              <FontAwesomeIcon icon={faCoffee} />
-              &nbsp; DashBoard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={'/dashboard'} className="nav-link active" aria-current="page">
-              <FontAwesomeIcon icon={faCoffee} />
-              &nbsp; DashBoard
+              &nbsp; Plants
             </Link>
           </li>
         </ul>

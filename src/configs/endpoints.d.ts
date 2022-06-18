@@ -3,4 +3,8 @@ export type EndPoints = {
     signUp: string;
     signIn: string;
   };
+  plant: {
+    getPlantDataById: string;
+    getAllPlantData: string;
+  };
 };

@@ -61,7 +61,6 @@ const Dashboard: React.FC = () => {
   };
 
   if (auth && auth.user) {
-    console.log(auth.user);
     return (
       <>
         <div className="chartjs-size-monitor">
