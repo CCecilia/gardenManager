@@ -19,3 +19,29 @@ export const getPlantData = async (id?: string): Promise<IPlant[] | IPlant> => {
 
   return response.data as IPlant[];
 };
+
+export const updatePlantData = async (update: Partial<IPlant>): Promise<IPlant> => {
+  const endpointService = new EndpointService();
+
+  const response = await axios.put(endpointService.allPlantData, {...update}, {
+    headers: getHeaders(),
+  });
+
+  return response.data as IPlant;
+};
+
+export const deletePlantData = async (plantId: string): Promise<boolean> => {
+  const endpointService = new EndpointService();
+  const response = await axios.delete(endpointService.allPlantData, {
+    headers: getHeaders(),
+    params: {
+      plantId
+    }
+  });
+
+  if (response.status === 200) {
+    return true;
+  }
+
+  return false;
+};
