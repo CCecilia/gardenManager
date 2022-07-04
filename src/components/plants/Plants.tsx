@@ -4,6 +4,8 @@ import { IPlant } from '../../types/Plant.interface';
 import TableHeader from '../tableHeader';
 import TableRow from './tableRow';
 import { getPlantData } from '../../services/Plant.service';
+import { PageNames } from '../../types/PageNames.enum';
+import { titleCase } from '../../utilities/Typography';
 
 type Props = {};
 
@@ -20,23 +22,33 @@ const Plants: React.FC<Props> = () => {
 
   return (
     <>
-      <table className="table table-striped table-dark">
-        <thead>
-          <tr>
-            <TableHeader key={0} header="ID"></TableHeader>
-            <TableHeader key={1} header="Common Name"></TableHeader>
-            <TableHeader key={2} header="Date Created"></TableHeader>
-            <TableHeader key={3} header="Growth"></TableHeader>
-            <TableHeader key={4} header="Heigth"></TableHeader>
-          </tr>
-        </thead>
-        <tbody>
-          {plantData &&
-            plantData.map((data: IPlant, index: number) => {
-              return <TableRow key={index} plantData={data}></TableRow>;
-            })}
-        </tbody>
-      </table>
+      <div className="row">
+        <div className="col-6">
+          <h2 className="heading">{titleCase(PageNames.PLANTS_PAGE)}</h2>
+        </div>
+        <div className="col-6">
+          <button className="btn btn-success btn-round">+</button>
+        </div>
+      </div>
+      <div className="row">
+        <table className="table table-striped table-dark">
+          <thead>
+            <tr>
+              <TableHeader key={0} header="ID"></TableHeader>
+              <TableHeader key={1} header="Common Name"></TableHeader>
+              <TableHeader key={2} header="Date Created"></TableHeader>
+              <TableHeader key={3} header="Growth"></TableHeader>
+              <TableHeader key={4} header="Heigth"></TableHeader>
+            </tr>
+          </thead>
+          <tbody>
+            {plantData &&
+              plantData.map((data: IPlant, index: number) => {
+                return <TableRow key={index} plantData={data}></TableRow>;
+              })}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };
