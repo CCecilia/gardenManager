@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../hooks/useAuth';
+import { RoutePaths } from '../../types/RoutePaths.enum';
 
 type Props = {};
 
@@ -22,7 +23,7 @@ const SideBar: React.FC<Props> = () => {
         <ul className="nav flex-column">
           <li className="nav-item">
             <Link
-              to={'/crops'}
+              to={RoutePaths.CROPS_ROUTE}
               className="nav-link active"
               aria-current="page"
             >
@@ -32,7 +33,7 @@ const SideBar: React.FC<Props> = () => {
           </li>
           <li className="nav-item">
             <Link
-              to={'/plants'}
+              to={RoutePaths.PLANTS_ROUTE}
               className="nav-link active"
               aria-current="page"
             >
@@ -43,7 +44,7 @@ const SideBar: React.FC<Props> = () => {
         </ul>
 
         <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-          <span>Saved reports</span>
+          <span>Lorem Ipsum</span>
           <a className="link-secondary" href="#" aria-label="Add a new report">
             <FontAwesomeIcon icon={faCoffee} />
           </a>
@@ -51,33 +52,7 @@ const SideBar: React.FC<Props> = () => {
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
             <Link
-              to={'/dashboard'}
-              className="nav-link active"
-              aria-current="page"
-            >
-              <FontAwesomeIcon icon={faCoffee} />
-              &nbsp; DashBoard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to={'/dashboard'}
-              className="nav-link active"
-              aria-current="page"
-            >
-              <FontAwesomeIcon icon={faCoffee} />
-              &nbsp; DashBoard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              <FontAwesomeIcon icon={faCoffee} />
-              &nbsp; Social engagement
-            </a>
-          </li>
-          <li className="nav-item">
-            <Link
-              to={'/dashboard'}
+              to={RoutePaths.DASHBOARD_ROUTE}
               className="nav-link active"
               aria-current="page"
             >

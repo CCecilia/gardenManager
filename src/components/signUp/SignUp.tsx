@@ -18,6 +18,10 @@ const SignUp: React.FC = () => {
     password: '',
   };
 
+  if (auth && auth.user) {
+    navigate('/dashboard');
+  };
+
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email('This is not a valid email.')

@@ -27,6 +27,10 @@ const SignIn: React.FC<Props> = () => {
   });
   const auth = useAuth();
 
+  if (auth && auth.user) {
+    navigate('/dashboard');
+  };
+
   const handleSignIn = async (formValue: InputValues) => {
     const { email, password } = formValue;
     setMessage('');

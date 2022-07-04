@@ -6,6 +6,10 @@ import TableRow from './tableRow';
 import { getPlantData } from '../../services/Plant.service';
 import { PageNames } from '../../types/PageNames.enum';
 import { titleCase } from '../../utilities/Typography';
+import { Link } from 'react-router-dom';
+import { RoutePaths } from '../../types/RoutePaths.enum';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {};
 
@@ -27,7 +31,13 @@ const Plants: React.FC<Props> = () => {
           <h2 className="heading">{titleCase(PageNames.PLANTS_PAGE)}</h2>
         </div>
         <div className="col-6">
-          <button className="btn btn-success btn-round">+</button>
+          <Link
+            to={RoutePaths.CREATE_PLANT_ROUTE}
+            className="btn btn-success btn-round"
+            aria-current="page"
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Link>
         </div>
       </div>
       <div className="row">

@@ -1,7 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
+import { useAuth } from '../../hooks/useAuth';
 
 const Home: React.FC = () => {
+  const auth = useAuth();
+  const navigate = useNavigate();
+
+  if (auth && auth.user) {
+    navigate('/dashboard');
+  };
+
   return (
     <>
       <div className="row">

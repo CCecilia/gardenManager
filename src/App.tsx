@@ -3,7 +3,7 @@ import './App.scss';
 
 import { Route, Routes } from 'react-router-dom';
 
-import AddPlant from './components/addPlant';
+import CreatePlant from './components/createPlant';
 import Dashboard from './components/dashBoard';
 import Header from './components/header';
 import Home from './components/home';
@@ -15,6 +15,8 @@ import SideBar from './components/sideBar';
 import SignIn from './components/signIn';
 import SignUp from './components/signUp';
 import Crops from './components/crops';
+import CreateCrop from './components/createCrop';
+import { RoutePaths } from './types/RoutePaths.enum';
 
 const App: React.FC = () => {
   return (
@@ -25,15 +27,16 @@ const App: React.FC = () => {
           <SideBar></SideBar>
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <Routes>
-              <Route path={'/'} element={<Home />} />
-              <Route path="/signIn" element={<SignIn />} />
-              <Route path="/signUp" element={<SignUp />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/addPlant" element={<AddPlant />} />
-              <Route path="/plants" element={<Plants />} />
-              <Route path="/plant/:id" element={<PlantDetails />} />
-              <Route path="/crops" element={<Crops />} />
+              <Route path={RoutePaths.EMPTY_ROUTE} element={<Home />} />
+              <Route path={RoutePaths.SIGNIN_ROUTE} element={<SignIn />} />
+              <Route path={RoutePaths.SIGNUP_ROUTE} element={<SignUp />} />
+              <Route path={RoutePaths.DASHBOARD_ROUTE} element={<Dashboard />} />
+              <Route path={RoutePaths.HOME_ROUTE} element={<Home />} />
+              <Route path={RoutePaths.CREATE_PLANT_ROUTE} element={<CreatePlant />} />
+              <Route path={RoutePaths.PLANTS_ROUTE} element={<Plants />} />
+              <Route path={RoutePaths.PLANT_DETAILS_ROUTE} element={<PlantDetails />} />
+              <Route path={RoutePaths.CROPS_ROUTE} element={<Crops />} />
+              <Route path={RoutePaths.CREATE_CROP_ROUTE} element={<CreateCrop />} />
             </Routes>
           </main>
         </ProvideAuth>
