@@ -1,6 +1,7 @@
 import { ICrop } from '../../../types/Crop.interface';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RoutePaths } from '../../../types/RoutePaths.enum';
 
 type Props = {
   cropData: ICrop;
@@ -16,7 +17,7 @@ const TableRow: React.FC<Props> = ({ cropData }) => {
   ) => {
     event.preventDefault();
 
-    navigate(`/crops/${id}`);
+    navigate(RoutePaths.CROP_DETAILS_ROUTE.replace('{id}', id));
   };
 
   return (

@@ -1,13 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { RoutePaths } from '../../types/RoutePaths.enum';
 
 const Home: React.FC = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
   if (auth && auth.user) {
-    navigate('/dashboard');
+    navigate(RoutePaths.DASHBOARD_ROUTE);
   };
 
   return (
@@ -15,7 +16,7 @@ const Home: React.FC = () => {
       <div className="row">
         <div className="col">
           <Link
-            to={'/signIn'}
+            to={RoutePaths.SIGNIN_ROUTE}
             className="btn btn-success btn-lg active"
             aria-current="page"
           >
@@ -24,7 +25,7 @@ const Home: React.FC = () => {
         </div>
         <div className="col">
           <Link
-            to={'/signUp'}
+            to={RoutePaths.SIGNUP_ROUTE}
             className="btn btn-success btn-lg active"
             aria-current="page"
           >

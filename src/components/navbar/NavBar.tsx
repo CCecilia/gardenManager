@@ -3,6 +3,7 @@ import './NavBar.scss';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { RoutePaths } from '../../types/RoutePaths.enum';
 
 type Props = {};
 
@@ -16,7 +17,7 @@ const NavBar: React.FC<Props> = () => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light  fixed-top">
-      <Link to={'/home'} className="nav-text-main">
+      <Link to={RoutePaths.HOME_ROUTE} className="nav-text-main">
         GardenManager
       </Link>
       <button
@@ -34,24 +35,19 @@ const NavBar: React.FC<Props> = () => {
       <div className=" navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-            <Link to={'/home'} className="nav-link">
+            <Link to={RoutePaths.HOME_ROUTE} className="nav-link">
               <span className="sr-only">Home</span>
             </Link>
           </li>
           {authorizedLinks ? (
             <>
               <li className="nav-item">
-                <Link to={'/user'} className="nav-link">
-                  <span className="sr-only">User</span>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={'/dashboard'} className="nav-link">
+                <Link to={RoutePaths.DASHBOARD_ROUTE} className="nav-link">
                   <span className="sr-only">DashBoard</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="/login" className="nav-link" onClick={auth!.signOut}>
+                <a className="nav-link" onClick={auth!.signOut}>
                   <span className="sr-only">LogOut</span>
                 </a>
               </li>
@@ -75,12 +71,12 @@ const NavBar: React.FC<Props> = () => {
           ) : (
             <>
               <li className="nav-item">
-                <Link to={'/login'} className="nav-link">
-                  <span className="sr-only">Login</span>
+                <Link to={RoutePaths.SIGNIN_ROUTE} className="nav-link">
+                  <span className="sr-only">Sign In</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={'/register'} className="nav-link">
+                <Link to={RoutePaths.SIGNUP_ROUTE} className="nav-link">
                   <span className="sr-only">Sign Up</span>
                 </Link>
               </li>

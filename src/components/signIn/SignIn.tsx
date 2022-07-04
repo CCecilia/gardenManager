@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { AxiosError } from 'axios';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { RoutePaths } from '../../types/RoutePaths.enum';
 
 type Props = {};
 type InputValues = {
@@ -28,7 +29,7 @@ const SignIn: React.FC<Props> = () => {
   const auth = useAuth();
 
   if (auth && auth.user) {
-    navigate('/dashboard');
+    navigate(RoutePaths.DASHBOARD_ROUTE);
   };
 
   const handleSignIn = async (formValue: InputValues) => {
@@ -48,7 +49,7 @@ const SignIn: React.FC<Props> = () => {
         setLoading(false);
         setMessage(resMessage);
       });
-    navigate('/dashboard');
+    navigate(RoutePaths.DASHBOARD_ROUTE);
   };
 
   return (

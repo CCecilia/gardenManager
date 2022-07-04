@@ -7,6 +7,7 @@ import { AxiosError } from 'axios';
 import { IUser } from '../../types/User.type';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { RoutePaths } from '../../types/RoutePaths.enum';
 
 const SignUp: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
@@ -19,7 +20,7 @@ const SignUp: React.FC = () => {
   };
 
   if (auth && auth.user) {
-    navigate('/dashboard');
+    navigate(RoutePaths.DASHBOARD_ROUTE);
   };
 
   const validationSchema = Yup.object().shape({
@@ -52,7 +53,7 @@ const SignUp: React.FC = () => {
       });
     setMessage('success');
     setSuccessful(true);
-    navigate('/dashboard');
+    navigate(RoutePaths.DASHBOARD_ROUTE);
   };
 
   return (

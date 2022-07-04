@@ -1,6 +1,7 @@
 import { IPlant } from '../../../types/Plant.interface';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RoutePaths } from '../../../types/RoutePaths.enum';
 
 type Props = {
   plantData: IPlant;
@@ -15,7 +16,7 @@ const TableRow: React.FC<Props> = ({ plantData }) => {
   ) => {
     event.preventDefault();
 
-    navigate(`/plant/${id}`);
+    navigate(RoutePaths.PLANT_DETAILS_ROUTE.replace('{id}', id));
   };
 
   return (

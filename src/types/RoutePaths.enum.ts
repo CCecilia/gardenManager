@@ -7,8 +7,8 @@ export enum RoutePaths {
   DASHBOARD_ROUTE = '/dashboard',
   PLANTS_ROUTE = '/plants',
   CREATE_PLANT_ROUTE = '/plants/create',
-  PLANT_DETAILS_ROUTE = '/plant/:id',
+  PLANT_DETAILS_ROUTE = '/plant/{id}',
   CROPS_ROUTE = '/crops',
-  CROP_DETAILS_ROUTE = 'crop/:id',
+  CROP_DETAILS_ROUTE = 'crop/{id}',
   CREATE_CROP_ROUTE = '/crops/create'
 };
