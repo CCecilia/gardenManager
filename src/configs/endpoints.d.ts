@@ -7,4 +7,8 @@ export type EndPoints = {
     getPlantDataById: string;
     getAllPlantData: string;
   };
+  crop: {
+    getCropDataById: string;
+    getAllCropData: string;
+  }
 };

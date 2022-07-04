@@ -27,4 +27,15 @@ export default class EndpointService {
   get allPlantData(): string {
     return this.baseUri + this.endpoints.plant.getAllPlantData;
   }
+
+  getCropDataById(id: string): string {
+    return (
+      this.baseUri +
+      this.endpoints.crop.getCropDataById.replace('{{cropId}}', id)
+    );
+  }
+
+  get allCropData(): string {
+    return this.baseUri + this.endpoints.crop.getAllCropData;
+  }
 }

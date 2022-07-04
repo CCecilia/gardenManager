@@ -22,7 +22,7 @@ const SideBar: React.FC<Props> = () => {
         <ul className="nav flex-column">
           <li className="nav-item">
             <Link
-              to={'/dashboard'}
+              to={'/crops'}
               className="nav-link active"
               aria-current="page"
             >

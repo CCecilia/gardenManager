@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { IPlant } from '../../types/Plant.interface';
-import TableHeader from './tableHeader';
+import TableHeader from '../tableHeader';
 import TableRow from './tableRow';
 import { getPlantData } from '../../services/Plant.service';
 

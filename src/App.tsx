@@ -14,6 +14,7 @@ import React from 'react';
 import SideBar from './components/sideBar';
 import SignIn from './components/signIn';
 import SignUp from './components/signUp';
+import Crops from './components/crops';
 
 const App: React.FC = () => {
   return (
@@ -32,6 +33,7 @@ const App: React.FC = () => {
               <Route path="/addPlant" element={<AddPlant />} />
               <Route path="/plants" element={<Plants />} />
               <Route path="/plant/:id" element={<PlantDetails />} />
+              <Route path="/crops" element={<Crops />} />
             </Routes>
           </main>
         </ProvideAuth>
