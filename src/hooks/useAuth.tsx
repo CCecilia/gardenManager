@@ -1,15 +1,18 @@
+/* eslint-disable no-redeclare */
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import EndpointService from '../services/Endpoint.service';
 import { UserModel } from '../services/User.service';
 import axios from 'axios';
 import { getHeaders } from '../services/Header.service';
+import { RoutePaths } from '../types/RoutePaths.enum';
 
 interface AuthContextInterface {
   user: UserModel | null;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => void;
+  shouldRedirect: () => [boolean, string | null];
 }
 
 const AuthContext = createContext<AuthContextInterface | null>(null);
@@ -72,6 +75,14 @@ export const useProvideAuth = () => {
     setUser(null);
   };
 
+  function shouldRedirect(): [boolean, string | null] {
+    if (user) {
+      return [false, null];
+    }
+
+    return [true, RoutePaths.SIGNIN_ROUTE];
+  };
+
   useEffect(() => {
     const userStr = localStorage.getItem('user');
     if (userStr) {
@@ -84,5 +95,6 @@ export const useProvideAuth = () => {
     signIn,
     signUp,
     signOut,
+    shouldRedirect,
   };
 };

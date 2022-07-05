@@ -48,6 +48,6 @@ export const getCropPlantData = async (plantIds: string[]): Promise<IPlant[]> =>
     headers: getHeaders(),
     params: {plantIds: plantIds.join(',')}
   });
-  
+
   return response.data as IPlant[];
 };

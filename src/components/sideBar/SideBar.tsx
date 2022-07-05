@@ -61,6 +61,18 @@ const SideBar: React.FC<Props> = () => {
             </Link>
           </li>
         </ul>
+        <ul className="nav flex-column mb-2">
+          <li className="nav-item">
+            <Link
+              to={RoutePaths.NUTRIENT_BATCHES_ROUTE}
+              className="nav-link active"
+              aria-current="page"
+            >
+              <FontAwesomeIcon icon={faCoffee} />
+              &nbsp; Nutrients
+            </Link>
+          </li>
+        </ul>
       </div>
     </nav>
   );

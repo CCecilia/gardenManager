@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, /* useNavigate */ } from 'react-router-dom';
+import { useLocation, useNavigate, /* useNavigate */ } from 'react-router-dom';
 import { getCropData, getCropPlantData, updateCropData } from '../../services/Crop.service';
 import { ICrop } from '../../types/Crop.interface';
 import { IPlant } from '../../types/Plant.interface';
 import { getIdFromLocation } from '../../utilities/StringHelpers';
 import { titleCase } from '../../utilities/Typography';
 import PlantsTable from '../../components/plantsTable';
+import { useAuth } from '../../hooks/useAuth';
 
 type Props = {};
 
 const CropDetails: React.FC<Props> = () => {
-  // const navigate = useNavigate();
+  const auth = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
   const [cropData, setCropData] = useState<ICrop | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,6 +21,13 @@ const CropDetails: React.FC<Props> = () => {
 
   useEffect(() => {
     (async () => {
+      if (auth) {
+        const [shouldRedirect, redirectRoute] = auth.shouldRedirect();
+
+        if ( shouldRedirect && redirectRoute ) {
+          navigate(redirectRoute);
+        }
+      }
       const id = getIdFromLocation(location);
       const data: ICrop = await getCropData(id);
       const plantData = await getCropPlantData(data.plants);

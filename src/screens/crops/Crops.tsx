@@ -1,7 +1,7 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { getAllCropData } from '../../services/Crop.service';
 import { ICrop } from '../../types/Crop.interface';
@@ -13,14 +13,19 @@ import TableRow from './tableRow';
 
 const Crops: React.FC = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
   const [cropData, setCropData] = useState<ICrop[] | null>(null);
 
-  if (!auth || !auth.user) {
-    return null;
-  }
 
   useEffect(() => {
     (async () => {
+      if (auth) {
+        const [shouldRedirect, redirectRoute] = auth.shouldRedirect();
+
+        if ( shouldRedirect && redirectRoute ) {
+          navigate(redirectRoute);
+        }
+      }
       const data = (await getAllCropData()) as ICrop[];
       setCropData(data);
       console.log(Object.keys(data[0]));

@@ -18,6 +18,7 @@ import Crops from './screens/crops';
 import CreateCrop from './screens/createCrop';
 import { RoutePaths } from './types/RoutePaths.enum';
 import CropDetails from './screens/cropDetails';
+import NutrientBatches from './screens/nutrientBatches';
 
 const App: React.FC = () => {
   return (
@@ -39,6 +40,7 @@ const App: React.FC = () => {
               <Route path={RoutePaths.CROPS_ROUTE} element={<Crops />} />
               <Route path={RoutePaths.CREATE_CROP_ROUTE} element={<CreateCrop />} />
               <Route path={RoutePaths.CROP_DETAILS_ROUTE} element={<CropDetails />} />
+              <Route path={RoutePaths.NUTRIENT_BATCHES_ROUTE} element={<NutrientBatches />} />
             </Routes>
           </main>
         </ProvideAuth>

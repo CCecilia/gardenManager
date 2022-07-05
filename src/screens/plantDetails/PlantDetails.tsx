@@ -7,6 +7,7 @@ import { titleCase } from '../../utilities/Typography';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getIdFromLocation } from '../../utilities/StringHelpers';
 import { RoutePaths } from '../../types/RoutePaths.enum';
+import { useAuth } from '../../hooks/useAuth';
 
 type Props = {
 };
@@ -30,6 +31,7 @@ interface InputValues {
 }
 
 const PlantDetails: React.FC<Props> = () => {
+  const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [plantData, setPlantData] = useState<IPlant | null>(null);
@@ -47,6 +49,13 @@ const PlantDetails: React.FC<Props> = () => {
 
   useEffect(() => {
     (async () => {
+      if (auth) {
+        const [shouldRedirect, redirectRoute] = auth.shouldRedirect();
+
+        if (shouldRedirect && redirectRoute) {
+          navigate(redirectRoute);
+        };
+      };
       const id = getIdFromLocation(location);
       const data = (await getPlantData(id)) as IPlant;
       console.log(data);
