@@ -1,3 +1,3 @@
-import CreatePlant from './AddPlant';
+import CreatePlant from './CreatePlant';
 
 export default CreatePlant;

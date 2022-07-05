@@ -17,7 +17,7 @@ const TableRow: React.FC<Props> = ({ cropData }) => {
   ) => {
     event.preventDefault();
 
-    navigate(RoutePaths.CROP_DETAILS_ROUTE.replace('{id}', id));
+    navigate(RoutePaths.CROP_DETAILS_ROUTE.replace(':id', id));
   };
 
   return (

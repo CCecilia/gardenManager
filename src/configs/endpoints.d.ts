@@ -10,5 +10,10 @@ export type EndPoints = {
   crop: {
     getCropDataById: string;
     getAllCropData: string;
-  }
+    getCropPlantData: string;
+  };
+  nutrientBatch: {
+    getNutrientBatchDataById: string;
+    getAllNutrientBatchData: string;
+  };
 };

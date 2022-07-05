@@ -5,6 +5,8 @@ import { IPlant } from '../../types/Plant.interface';
 import { deletePlantData, getPlantData, updatePlantData } from '../../services/Plant.service';
 import { titleCase } from '../../utilities/Typography';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getIdFromLocation } from '../../utilities/StringHelpers';
+import { RoutePaths } from '../../types/RoutePaths.enum';
 
 type Props = {
 };
@@ -43,17 +45,9 @@ const PlantDetails: React.FC<Props> = () => {
     harvested: plantData?.harvested,
   };
 
-  const getIdFromLocation = (): string => {
-    const { pathname } = location;
-    // eslint-disable-next-line no-unused-vars
-    const [_empty, _base, id] = pathname.split('/');
-
-    return id;
-   };
-
   useEffect(() => {
     (async () => {
-      const id = getIdFromLocation();
+      const id = getIdFromLocation(location);
       const data = (await getPlantData(id)) as IPlant;
       console.log(data);
       setPlantData(data);
@@ -65,7 +59,7 @@ const PlantDetails: React.FC<Props> = () => {
 
     const results = await deletePlantData(plantId);
     if (results) {
-      navigate('/plants');
+      navigate(RoutePaths.PLANTS_ROUTE);
     }
   };
 
@@ -184,10 +178,7 @@ const PlantDetails: React.FC<Props> = () => {
               </label>
             </div>
             <div className="form-group col-6">
-              <Field as="select" name="currentStage">
-                {plantData?.currentStage &&
-                  <option selected={true} value={JSON.stringify(plantData.currentStage)}>{ plantData.currentStage.cycleNumber } { plantData.currentStage.name }</option>
-                }
+              <Field as="select" name="currentStage" defaultValue={plantData?.currentStage ? JSON.stringify(plantData.currentStage) : ''}>
                 {plantData?.stages &&
                   plantData.stages.map((stage: GrowthStage, index: number) => {
                     if (stage.cycleNumber !== plantData.currentStage.cycleNumber) {

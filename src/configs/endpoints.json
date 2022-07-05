@@ -8,11 +8,12 @@
     "getAllPlantData": "/plant"
   },
   "crop": {
-    "getCropDataById": "crop/{{cropId}}",
-    "getAllCropData": "/crop"
+    "getCropDataById": "/crop/{{cropId}}",
+    "getAllCropData": "/crop",
+    "getCropPlantData": "/crop/plantData"
   },
   "nutrientBatch": {
-    "getNutrientBatchDataById": "nutrientBatch/{{nutrientBatchId}}",
+    "getNutrientBatchDataById": "/nutrientBatch/{{nutrientBatchId}}",
     "getAllNutrientBatchData": "/nutrientBatch"
   }
 }

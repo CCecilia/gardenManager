@@ -38,4 +38,19 @@ export default class EndpointService {
   get allCropData(): string {
     return this.baseUri + this.endpoints.crop.getAllCropData;
   }
+
+  get cropPlantData(): string {
+    return this.baseUri + this.endpoints.crop.getCropPlantData;
+  }
+
+  getNutrientBatchById(id: string): string {
+    return (
+      this.baseUri +
+      this.endpoints.nutrientBatch.getNutrientBatchDataById.replace('{{nutrientBatchId}}', id)
+    );
+  }
+
+  get allNutrientBatchData(): string {
+    return this.baseUri + this.endpoints.nutrientBatch.getAllNutrientBatchData;
+  }
 }

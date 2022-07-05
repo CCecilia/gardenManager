@@ -16,7 +16,7 @@ const TableRow: React.FC<Props> = ({ plantData }) => {
   ) => {
     event.preventDefault();
 
-    navigate(RoutePaths.PLANT_DETAILS_ROUTE.replace('{id}', id));
+    navigate(RoutePaths.PLANT_DETAILS_ROUTE.replace(':id', id));
   };
 
   return (

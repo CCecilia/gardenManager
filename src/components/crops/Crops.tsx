@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { getCropData } from '../../services/Crop.service';
+import { getAllCropData } from '../../services/Crop.service';
 import { ICrop } from '../../types/Crop.interface';
 import { PageNames } from '../../types/PageNames.enum';
 import { RoutePaths } from '../../types/RoutePaths.enum';
@@ -21,7 +21,7 @@ const Crops: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const data = (await getCropData()) as ICrop[];
+      const data = (await getAllCropData()) as ICrop[];
       setCropData(data);
       console.log(Object.keys(data[0]));
     })();

@@ -17,6 +17,7 @@ import SignUp from './components/signUp';
 import Crops from './components/crops';
 import CreateCrop from './components/createCrop';
 import { RoutePaths } from './types/RoutePaths.enum';
+import CropDetails from './components/cropDetails';
 
 const App: React.FC = () => {
   return (
@@ -37,6 +38,7 @@ const App: React.FC = () => {
               <Route path={RoutePaths.PLANT_DETAILS_ROUTE} element={<PlantDetails />} />
               <Route path={RoutePaths.CROPS_ROUTE} element={<Crops />} />
               <Route path={RoutePaths.CREATE_CROP_ROUTE} element={<CreateCrop />} />
+              <Route path={RoutePaths.CROP_DETAILS_ROUTE} element={<CropDetails />} />
             </Routes>
           </main>
         </ProvideAuth>

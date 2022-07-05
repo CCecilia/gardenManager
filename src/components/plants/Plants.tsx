@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { IPlant } from '../../types/Plant.interface';
-import TableHeader from '../tableHeader';
-import TableRow from './tableRow';
 import { getPlantData } from '../../services/Plant.service';
 import { PageNames } from '../../types/PageNames.enum';
 import { titleCase } from '../../utilities/Typography';
@@ -10,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { RoutePaths } from '../../types/RoutePaths.enum';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import PlantsTable from '../plantsTable';
 
 type Props = {};
 
@@ -41,23 +40,9 @@ const Plants: React.FC<Props> = () => {
         </div>
       </div>
       <div className="row">
-        <table className="table table-striped table-dark">
-          <thead>
-            <tr>
-              <TableHeader key={0} header="ID"></TableHeader>
-              <TableHeader key={1} header="Common Name"></TableHeader>
-              <TableHeader key={2} header="Date Created"></TableHeader>
-              <TableHeader key={3} header="Growth"></TableHeader>
-              <TableHeader key={4} header="Heigth"></TableHeader>
-            </tr>
-          </thead>
-          <tbody>
-            {plantData &&
-              plantData.map((data: IPlant, index: number) => {
-                return <TableRow key={index} plantData={data}></TableRow>;
-              })}
-          </tbody>
-        </table>
+        {plantData &&
+          <PlantsTable plants={plantData}></PlantsTable>
+        }
       </div>
     </>
   );
