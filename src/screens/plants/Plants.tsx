@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { RoutePaths } from '../../types/RoutePaths.enum';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import PlantsTable from '../plantsTable';
+import PlantsTable from '../../components/plantsTable';
 
 type Props = {};
 

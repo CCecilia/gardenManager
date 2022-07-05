@@ -3,21 +3,21 @@ import './App.scss';
 
 import { Route, Routes } from 'react-router-dom';
 
-import CreatePlant from './components/createPlant';
-import Dashboard from './components/dashBoard';
+import CreatePlant from './screens/createPlant';
+import Dashboard from './screens/dashBoard';
 import Header from './components/header';
-import Home from './components/home';
-import PlantDetails from './components/plantDetails';
-import Plants from './components/plants';
+import Home from './screens/home';
+import PlantDetails from './screens/plantDetails';
+import Plants from './screens/plants';
 import { ProvideAuth } from './hooks/useAuth';
 import React from 'react';
 import SideBar from './components/sideBar';
-import SignIn from './components/signIn';
-import SignUp from './components/signUp';
-import Crops from './components/crops';
-import CreateCrop from './components/createCrop';
+import SignIn from './screens/signIn';
+import SignUp from './screens/signUp';
+import Crops from './screens/crops';
+import CreateCrop from './screens/createCrop';
 import { RoutePaths } from './types/RoutePaths.enum';
-import CropDetails from './components/cropDetails';
+import CropDetails from './screens/cropDetails';
 
 const App: React.FC = () => {
   return (

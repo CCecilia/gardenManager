@@ -8,7 +8,7 @@ import { ICrop } from '../../types/Crop.interface';
 import { PageNames } from '../../types/PageNames.enum';
 import { RoutePaths } from '../../types/RoutePaths.enum';
 import { titleCase } from '../../utilities/Typography';
-import TableHeader from '../tableHeader';
+import TableHeader from '../../components/tableHeader';
 import TableRow from './tableRow';
 
 const Crops: React.FC = () => {

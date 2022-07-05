@@ -5,7 +5,7 @@ import { ICrop } from '../../types/Crop.interface';
 import { IPlant } from '../../types/Plant.interface';
 import { getIdFromLocation } from '../../utilities/StringHelpers';
 import { titleCase } from '../../utilities/Typography';
-import PlantsTable from '../plantsTable';
+import PlantsTable from '../../components/plantsTable';
 
 type Props = {};
 
