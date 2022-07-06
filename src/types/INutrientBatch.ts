@@ -11,7 +11,6 @@ export interface INutrientBatch {
   phUpMls: number;
   startingPh: number;
   endingPh: number;
-  applications: INutrientBatchApplication,
+  applications: INutrientBatchApplication[],
   __v: number;
-
 };

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, /* useNavigate */ } from 'react-router-dom';
-import { getCropData, getCropPlantData, updateCropData } from '../../services/Crop.service';
+import { getCropData, getCropNutrientBatchData, getCropPlantData, updateCropData } from '../../services/Crop.service';
 import { ICrop } from '../../types/Crop.interface';
 import { IPlant } from '../../types/Plant.interface';
 import { getIdFromLocation } from '../../utilities/StringHelpers';
 import { titleCase } from '../../utilities/Typography';
 import PlantsTable from '../../components/plantsTable';
 import { useAuth } from '../../hooks/useAuth';
+import { INutrientBatch } from '../../types/INutrientBatch';
+import NutrientBatchTable from '../../components/nutrientBatchTable';
 
 type Props = {};
 
@@ -18,6 +20,7 @@ const CropDetails: React.FC<Props> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [cropName, setCropName] = useState<string>('');
   const [cropPlantData, setCropPlantData] = useState<IPlant[] | null>(null);
+  const [cropNutrientBatchData, setCropNutrientBatchData] = useState<INutrientBatch[] | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -26,15 +29,17 @@ const CropDetails: React.FC<Props> = () => {
 
         if ( shouldRedirect && redirectRoute ) {
           navigate(redirectRoute);
-        }
-      }
+        };
+      };
+
       const id = getIdFromLocation(location);
       const data: ICrop = await getCropData(id);
       const plantData = await getCropPlantData(data.plants);
+      const nutrientBatchData = await getCropNutrientBatchData(data.nutrientBatches);
+
       setCropData(data);
-      // eslint-disable-next-line no-debugger
-      debugger;
       setCropPlantData(plantData);
+      setCropNutrientBatchData(nutrientBatchData);
     })();
   }, []);
 
@@ -110,6 +115,16 @@ const CropDetails: React.FC<Props> = () => {
       <div className="col-12">
         {cropPlantData &&
           <PlantsTable plants={cropPlantData}/>
+        }
+      </div>
+    </div>
+    <div className="row">
+      <div className="col-12">
+        <h2 className="heading">Nutrient Batches</h2>
+      </div>
+      <div className="col-12">
+        {cropNutrientBatchData &&
+          <NutrientBatchTable nutrientBatches={cropNutrientBatchData}/>
         }
       </div>
     </div>

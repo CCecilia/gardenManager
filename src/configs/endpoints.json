@@ -10,10 +10,12 @@
   "crop": {
     "getCropDataById": "/crop/{{cropId}}",
     "getAllCropData": "/crop",
-    "getCropPlantData": "/crop/plantData"
+    "getCropPlantData": "/crop/plantData",
+    "getCropNutrientBatchData": "/crop/nutrientBatchData"
   },
   "nutrientBatch": {
     "getNutrientBatchDataById": "/nutrientBatch/{{nutrientBatchId}}",
-    "getAllNutrientBatchData": "/nutrientBatch"
+    "getAllNutrientBatchData": "/nutrientBatch",
+    "createApplication": "/nutrientBatch/application"
   }
 }

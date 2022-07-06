@@ -11,5 +11,6 @@ export enum RoutePaths {
   CROPS_ROUTE = '/crops',
   CROP_DETAILS_ROUTE = '/crop/:id',
   CREATE_CROP_ROUTE = '/crops/create',
-  NUTRIENT_BATCHES_ROUTE = '/nutrientBatches'
+  NUTRIENT_BATCHES_ROUTE = '/nutrientBatches',
+  NUTRIENT_BATCH_DETAILS_ROUTE = '/nutrientBatch/:id'
 };
