@@ -5,7 +5,8 @@
   },
   "plant": {
     "getPlantDataById": "/plant/{{plantId}}",
-    "getAllPlantData": "/plant"
+    "getAllPlantData": "/plant",
+    "plantGrowthLog": "/plant/growthLog"
   },
   "crop": {
     "getCropDataById": "/crop/{{cropId}}",

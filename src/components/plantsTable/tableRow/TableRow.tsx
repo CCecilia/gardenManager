@@ -24,8 +24,6 @@ const TableRow: React.FC<Props> = ({ plantData }) => {
       <td>{plantData._id}</td>
       <td>{plantData.commonName}</td>
       <td>{plantData.dateCreated.toLocaleString()}</td>
-      <td>{plantData.growth}</td>
-      <td>{plantData.height}</td>
     </tr>
   );
 };

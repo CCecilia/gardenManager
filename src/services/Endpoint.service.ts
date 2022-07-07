@@ -28,6 +28,10 @@ export default class EndpointService {
     return this.baseUri + this.endpoints.plant.getAllPlantData;
   };
 
+  get plantGrowthLog(): string {
+    return this.baseUri + this.endpoints.plant.plantGrowthLog;
+  };
+
   getCropDataById(id: string): string {
     return (
       this.baseUri +

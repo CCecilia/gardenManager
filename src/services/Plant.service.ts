@@ -2,6 +2,7 @@ import EndpointService from './Endpoint.service';
 import { IPlant } from '../types/Plant.interface';
 import axios from 'axios';
 import { getHeaders } from './Header.service';
+import { IGrowthLog } from '../types/IGrowthLog';
 
 export const getPlantData = async (id?: string): Promise<IPlant[] | IPlant> => {
   const endpointService = new EndpointService();
@@ -44,4 +45,18 @@ export const deletePlantData = async (plantId: string): Promise<boolean> => {
   }
 
   return false;
+};
+
+export const createGrowthLog = async (img: File): Promise<IGrowthLog> => {
+  const endpointService = new EndpointService();
+  const formData = new FormData();
+  formData.append('plantPhoto', img);
+  const headers = getHeaders();
+  headers['Content-Type'] = 'multipart/form-data';
+
+  const response = await axios.post(endpointService.plantGrowthLog, formData, { headers });
+  // eslint-disable-next-line no-debugger
+  debugger;
+
+  return response.data as IGrowthLog;
 };

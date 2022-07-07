@@ -1,3 +1,5 @@
+import { IGrowthLog } from './IGrowthLog';
+
 export interface GrowthStage {
   name: string;
   cycleNumber: number;
@@ -6,18 +8,24 @@ export interface GrowthStage {
 
 export interface IPlant {
   _id: string;
+  germinationDate: Date;
   dateCreated: Date;
-  growth: number[];
-  height: number;
+  location: {
+    area: string;
+    column: number;
+    row: number;
+  };
+  stages: GrowthStage[];
   currentStage: GrowthStage;
-  numberOfLeaves: number;
   hoursOfLight: number;
-  numberOfLumensExposure: number;
-  notes: [];
+  notes: string[];
   harvested: boolean;
   commonName: string;
   genus: string;
   species: string;
-  stages: GrowthStage[];
+  variety: string;
+  numberOfLumensExposure: number;
+  dailyWaterUsage: number;
+  growthLogs: IGrowthLog[];
   __v: number;
 }
