@@ -71,6 +71,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/chart.js": "^2.9.37",
+    "@types/react-bootstrap": "^0.32.30",
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { RoutePaths } from '../../types/RoutePaths.enum';
 
 type Props = {};
 
@@ -15,7 +16,7 @@ const Header: React.FC<Props> = () => {
   return (
     <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
       <Link
-        to={authorizedLinks ? '/dashboard' : '/home'}
+        to={authorizedLinks ? RoutePaths.DASHBOARD_ROUTE : RoutePaths.HOME_ROUTE}
         className="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6"
         aria-current="page"
       >
