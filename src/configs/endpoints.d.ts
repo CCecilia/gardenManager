@@ -19,4 +19,7 @@ export type EndPoints = {
     getAllNutrientBatchData: string;
     createApplication: string;
   };
+  search: {
+    search: string;
+  }
 };

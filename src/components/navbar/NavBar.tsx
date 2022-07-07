@@ -1,19 +1,38 @@
 import './NavBar.scss';
 
 import { Link } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { RoutePaths } from '../../types/RoutePaths.enum';
+import { search } from '../../services/Search.service';
 
 type Props = {};
 
 const NavBar: React.FC<Props> = () => {
   const auth = useAuth();
+  const [query, setQuery] = useState<string | null>(null);
+
   let authorizedLinks = false;
 
   if (auth && auth.user) {
     authorizedLinks = true;
   }
+
+  const handleSearchFormOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (query) {
+      const results = await search(query);
+      console.log('search results ', results);
+    };
+  };
+
+  const handleSearchInputOnChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
+    if (value !== '') {
+      setQuery(value);
+    }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light  fixed-top">
@@ -52,12 +71,13 @@ const NavBar: React.FC<Props> = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <form className="form-inline my-2 my-lg-0">
+                <form className="form-inline my-2 my-lg-0" onSubmit={handleSearchFormOnSubmit}>
                   <input
                     className="form-control mr-sm-2"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
+                    onChange={handleSearchInputOnChange}
                   />
                   <button
                     className="btn btn-outline-success my-2 my-sm-0"

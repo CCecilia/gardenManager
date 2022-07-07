@@ -65,4 +65,8 @@ export default class EndpointService {
   get createNutrientBatchApplication(): string {
     return this.baseUri + this.endpoints.nutrientBatch.createApplication;
   };
+
+  get search(): string {
+    return this.baseUri + this.endpoints.search.search;
+  }
 };

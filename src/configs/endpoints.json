@@ -18,5 +18,8 @@
     "getNutrientBatchDataById": "/nutrientBatch/{{nutrientBatchId}}",
     "getAllNutrientBatchData": "/nutrientBatch",
     "createApplication": "/nutrientBatch/application"
+  },
+  "search": {
+    "search": "/search"
   }
 }
