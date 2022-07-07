@@ -10,14 +10,14 @@ import { Modal, Button } from 'react-bootstrap';
 type Props = {};
 
 type FormData = {
-  totalWaterGallons: number,
-  totalFloraMicroMls: number,
-  totalFloraBloomMls: number,
-  totalFloraGroMls: number,
-  phDownMls: number,
-  phUpMls: number,
-  startingPh: number,
-  endingPh: number
+  totalWaterGallons: number | null,
+  totalFloraMicroMls: number | null,
+  totalFloraBloomMls: number | null,
+  totalFloraGroMls: number | null,
+  phDownMls: number | null,
+  phUpMls: number | null,
+  startingPh: number | null,
+  endingPh: number | null
 }
 
 const NutrientBatchDetails: React.FC<Props> = () => {
@@ -27,14 +27,14 @@ const NutrientBatchDetails: React.FC<Props> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [nutrientBatchData, setNutrientBatchData] = useState<INutrientBatch | null>(null);
   const [formData, setFormData] = useState<FormData>({
-    totalWaterGallons: 0,
-    totalFloraMicroMls: 0,
-    totalFloraBloomMls: 0,
-    totalFloraGroMls: 0,
-    phDownMls: 0,
-    phUpMls: 0,
-    startingPh: 0,
-    endingPh: 0,
+    totalWaterGallons: null,
+    totalFloraMicroMls: null,
+    totalFloraBloomMls: null,
+    totalFloraGroMls: null,
+    phDownMls: null,
+    phUpMls: null,
+    startingPh: null,
+    endingPh: null,
   });
   const [amountUsed, setAmountUsed] = useState<number>(0);
   const [show, setShow] = useState(false);
@@ -79,7 +79,9 @@ const NutrientBatchDetails: React.FC<Props> = () => {
     }
     setLoading(true);
 
-    nutrientBatchData.totalWaterGallons = formData.totalWaterGallons;
+    if (formData.totalWaterGallons) {
+      nutrientBatchData.totalWaterGallons = formData.totalWaterGallons;
+    }
 
     await updateNutrientBatchData(nutrientBatchData).catch((err) => {
       console.error(err);
@@ -125,11 +127,8 @@ const NutrientBatchDetails: React.FC<Props> = () => {
                 <input
                   id="totalWaterGallons"
                   name="totalWaterGallons"
-                  placeholder={
-                    formData.totalWaterGallons.toString()
-                  }
                   className="form-control"
-                  value={formData.totalWaterGallons}
+                  value={formData.totalWaterGallons ? formData.totalWaterGallons : '0'}
                   onChange={handleOnChange}
                   type="number"
                 />
@@ -139,11 +138,8 @@ const NutrientBatchDetails: React.FC<Props> = () => {
                 <input
                   id="totalFloraMicroMls"
                   name="totalFloraMicroMls"
-                  placeholder={
-                    formData.totalFloraMicroMls.toString()
-                  }
                   className="form-control"
-                  value={formData.totalFloraMicroMls}
+                  value={formData.totalFloraMicroMls ? formData.totalFloraMicroMls : '0'}
                   onChange={handleOnChange}
                   type="number"
                 />
@@ -155,11 +151,8 @@ const NutrientBatchDetails: React.FC<Props> = () => {
                 <input
                   id="totalFloraBloomMls"
                   name="totalFloraBloomMls"
-                  placeholder={
-                    formData.totalFloraBloomMls.toString()
-                  }
                   className="form-control"
-                  value={formData.totalFloraBloomMls}
+                  value={formData.totalFloraBloomMls ? formData.totalFloraBloomMls : '0'}
                   onChange={handleOnChange}
                   type="number"
                 />
@@ -169,11 +162,8 @@ const NutrientBatchDetails: React.FC<Props> = () => {
                 <input
                   id="totalFloraGroMls"
                   name="totalFloraGroMls"
-                  placeholder={
-                    formData.totalFloraGroMls.toString()
-                  }
                   className="form-control"
-                  value={formData.totalFloraGroMls}
+                  value={formData.totalFloraGroMls ? formData.totalFloraGroMls : '0'}
                   onChange={handleOnChange}
                   type="number"
                 />
@@ -185,11 +175,8 @@ const NutrientBatchDetails: React.FC<Props> = () => {
                 <input
                   id="phDownMls"
                   name="phDownMls"
-                  placeholder={
-                    formData.phDownMls.toString()
-                  }
                   className="form-control"
-                  value={formData.phDownMls}
+                  value={formData.phDownMls ? formData.phDownMls : '0'}
                   onChange={handleOnChange}
                   type="number"
                 />
@@ -199,11 +186,8 @@ const NutrientBatchDetails: React.FC<Props> = () => {
                 <input
                   id="phUpMls"
                   name="phUpMls"
-                  placeholder={
-                    formData.phUpMls.toString()
-                  }
                   className="form-control"
-                  value={formData.phUpMls}
+                  value={formData.phUpMls ? formData.phUpMls : '0'}
                   onChange={handleOnChange}
                   type="number"
                 />
@@ -215,11 +199,8 @@ const NutrientBatchDetails: React.FC<Props> = () => {
                 <input
                   id="startingPh"
                   name="startingPh"
-                  placeholder={
-                    formData.startingPh.toString()
-                  }
                   className="form-control"
-                  value={formData.startingPh}
+                  value={formData.startingPh ? formData.startingPh : '0'}
                   onChange={handleOnChange}
                   type="number"
                 />
@@ -229,11 +210,8 @@ const NutrientBatchDetails: React.FC<Props> = () => {
                 <input
                   id="endingPh"
                   name="endingPh"
-                  placeholder={
-                    formData.endingPh.toString()
-                  }
                   className="form-control"
-                  value={formData.endingPh}
+                  value={formData.endingPh ?  formData.endingPh : '0'}
                   onChange={handleOnChange}
                   type="number"
                 />

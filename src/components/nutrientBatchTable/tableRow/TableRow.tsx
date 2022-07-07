@@ -10,7 +10,7 @@ type Props = {
 const TableRow: React.FC<Props> = ({ nutrientBatchData }) => {
   const navigate = useNavigate();
 
-  const handleRowClick = (
+  const handleRowDblClick = (
     event: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
     id: string
   ) => {
@@ -20,7 +20,7 @@ const TableRow: React.FC<Props> = ({ nutrientBatchData }) => {
   };
 
   return (
-    <tr onDoubleClick={(e) => handleRowClick(e, nutrientBatchData._id)}>
+    <tr onDoubleClick={(e) => handleRowDblClick(e, nutrientBatchData._id)}>
       <td>{nutrientBatchData._id}</td>
       <td>{new Date(nutrientBatchData.dateCreated).toLocaleDateString()}</td>
       <td>{nutrientBatchData.totalWaterGallons}</td>

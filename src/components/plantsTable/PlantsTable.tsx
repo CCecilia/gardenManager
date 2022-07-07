@@ -15,8 +15,6 @@ const PlantsTable: React.FC<Props> = ({ plants }) => {
           <TableHeader key={0} header="ID"></TableHeader>
           <TableHeader key={1} header="Common Name"></TableHeader>
           <TableHeader key={2} header="Date Created"></TableHeader>
-          <TableHeader key={3} header="Growth"></TableHeader>
-          <TableHeader key={4} header="Heigth"></TableHeader>
         </tr>
       </thead>
       <tbody>

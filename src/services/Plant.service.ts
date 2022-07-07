@@ -47,16 +47,15 @@ export const deletePlantData = async (plantId: string): Promise<boolean> => {
   return false;
 };
 
-export const createGrowthLog = async (img: File): Promise<IGrowthLog> => {
+export const createGrowthLog = async (plantId: string, numbersOfLeaves: number, heightInches: number, img: string, ): Promise<IGrowthLog> => {
   const endpointService = new EndpointService();
-  const formData = new FormData();
-  formData.append('plantPhoto', img);
-  const headers = getHeaders();
-  headers['Content-Type'] = 'multipart/form-data';
 
-  const response = await axios.post(endpointService.plantGrowthLog, formData, { headers });
-  // eslint-disable-next-line no-debugger
-  debugger;
+  const response = await axios.post(endpointService.plantGrowthLog, {
+    plantId,
+    numbersOfLeaves,
+    heightInches,
+    img
+  }, { headers: getHeaders() });
 
   return response.data as IGrowthLog;
 };
