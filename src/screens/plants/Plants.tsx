@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import PlantsTable from '../../components/plantsTable';
 import { useAuth } from '../../hooks/useAuth';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 type Props = {};
 
@@ -30,17 +32,16 @@ const Plants: React.FC<Props> = () => {
 
       const data = (await getPlantData()) as IPlant[];
       setPlantData(data);
-      console.log(Object.keys(data[0]));
     })();
   }, []);
 
   return (
     <>
-      <div className="row">
-        <div className="col-6">
+      <Row style={{margin:'1vh auto'}}>
+        <Col xs={10}>
           <h2 className="heading">{titleCase(PageNames.PLANTS_PAGE)}</h2>
-        </div>
-        <div className="col-6">
+        </Col>
+        <Col style={{textAlign:'right'}}>
           <Link
             to={RoutePaths.CREATE_PLANT_ROUTE}
             className="btn btn-success btn-round"
@@ -48,13 +49,13 @@ const Plants: React.FC<Props> = () => {
           >
             <FontAwesomeIcon icon={faPlus} />
           </Link>
-        </div>
-      </div>
-      <div className="row">
+        </Col>
+      </Row>
+      <Row>
         {plantData &&
           <PlantsTable plants={plantData}></PlantsTable>
         }
-      </div>
+      </Row>
     </>
   );
 };

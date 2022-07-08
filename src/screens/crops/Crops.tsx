@@ -10,6 +10,9 @@ import { RoutePaths } from '../../types/RoutePaths.enum';
 import { titleCase } from '../../utilities/Typography';
 import TableHeader from '../../components/tableHeader';
 import TableRow from './tableRow';
+import Table from 'react-bootstrap/Table';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const Crops: React.FC = () => {
   const auth = useAuth();
@@ -34,11 +37,11 @@ const Crops: React.FC = () => {
 
   return (
     <>
-      <div className="row">
-        <div className="col-6">
+      <Row style={{margin:'1vh auto'}}>
+        <Col xs={10}>
           <h2 className="heading">{titleCase(PageNames.CROPS_PAGE)}</h2>
-        </div>
-        <div className="col-6">
+        </Col>
+        <Col style={{textAlign:'right'}}>
           <Link
             to={RoutePaths.CREATE_CROP_ROUTE}
             className="btn btn-success btn-round"
@@ -46,10 +49,10 @@ const Crops: React.FC = () => {
           >
             <FontAwesomeIcon icon={faPlus} />
           </Link>
-        </div>
-      </div>
-      <div className="row">
-        <table className="table table-striped table-dark">
+        </Col>
+      </Row>
+      <Row>
+        <Table responsive striped bordered hover variant="dark">
           <thead>
             <tr>
               <TableHeader key={0} header="ID"></TableHeader>
@@ -63,8 +66,8 @@ const Crops: React.FC = () => {
                 return <TableRow key={index} cropData={data}></TableRow>;
               })}
           </tbody>
-        </table>
-      </div>
+        </Table>
+      </Row>
     </>
   );
 };
