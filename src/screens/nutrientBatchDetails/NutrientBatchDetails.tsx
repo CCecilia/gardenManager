@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ApplicationTable from '../../components/applicationsTable';
 import { useAuth } from '../../hooks/useAuth';
-import { createNutrientBatchApplication, getNutrientBatchData, updateNutrientBatchData } from '../../services/NutrientBatch.service';
+import { createNutrientBatchApplication, getNutrientBatchData } from '../../services/NutrientBatch.service';
 import { INutrientBatch } from '../../types/INutrientBatch';
 import { getIdFromLocation } from '../../utilities/StringHelpers';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Row } from 'react-bootstrap';
 import DetailsPageHeader from '../../components/detailsPageHeader';
+import NutrientBatchUpdateForm from '../../components/nutrientBatchUpdateForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {};
 
@@ -38,9 +41,12 @@ const NutrientBatchDetails: React.FC<Props> = () => {
     endingPh: null,
   });
   const [amountUsed, setAmountUsed] = useState<number>(0);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+  const openUpdateForm = () => setShowUpdateForm(true);
+  const closeUpdateForm = () => setShowUpdateForm(false);
 
   useEffect(() => {
     (async () => {
@@ -67,34 +73,10 @@ const NutrientBatchDetails: React.FC<Props> = () => {
     setLoading(true);
 
     const updated = await createNutrientBatchApplication(amountUsed, nutrientBatchData._id);
-    setShow(false);
-    console.log(updated);
+
+    handleClose();
     setNutrientBatchData(updated);
     setLoading(false);
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (loading || !nutrientBatchData) {
-      return;
-    }
-    setLoading(true);
-
-    if (formData.totalWaterGallons) {
-      nutrientBatchData.totalWaterGallons = formData.totalWaterGallons;
-    }
-
-    await updateNutrientBatchData(nutrientBatchData).catch((err) => {
-      console.error(err);
-    });
-
-    setLoading(false);
-  };
-
-  const handleOnChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const { value, name } = event.currentTarget;
-
-    setFormData(Object.assign(formData, { [name]: value }));
   };
 
   const handleModalOnChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -108,127 +90,64 @@ const NutrientBatchDetails: React.FC<Props> = () => {
     setAmountUsed(used);
   };
 
-  return <>
+  const handleUpdatedNutrientBatchData = (updatedBatchData: INutrientBatch) => {
+    setNutrientBatchData(updatedBatchData);
+  };
+
+  return <Row>
     {nutrientBatchData &&
       <>
-        <DetailsPageHeader
-          name="Nutrient Batch"
-          id={nutrientBatchData._id}
-          dateCreated={nutrientBatchData.dateCreated}
-        />
-        <div className="row">
-          <form onSubmit={handleSubmit}>
-            <div className="form-row">
-              <div className="form-group col-6">
-                <label htmlFor="totalWaterGallons">Total Amount of Water</label>
-                <input
-                  id="totalWaterGallons"
-                  name="totalWaterGallons"
-                  className="form-control"
-                  value={formData.totalWaterGallons ? formData.totalWaterGallons : '0'}
-                  onChange={handleOnChange}
-                  type="number"
-                />
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="totalFloraMicroMls">Total Flora Micro Mls</label>
-                <input
-                  id="totalFloraMicroMls"
-                  name="totalFloraMicroMls"
-                  className="form-control"
-                  value={formData.totalFloraMicroMls ? formData.totalFloraMicroMls : '0'}
-                  onChange={handleOnChange}
-                  type="number"
-                />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group col-6">
-                <label htmlFor="totalFloraBloomMls">Total Flora Bloom Mls</label>
-                <input
-                  id="totalFloraBloomMls"
-                  name="totalFloraBloomMls"
-                  className="form-control"
-                  value={formData.totalFloraBloomMls ? formData.totalFloraBloomMls : '0'}
-                  onChange={handleOnChange}
-                  type="number"
-                />
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="totalFloraGroMls">Total Flora Gro Mls</label>
-                <input
-                  id="totalFloraGroMls"
-                  name="totalFloraGroMls"
-                  className="form-control"
-                  value={formData.totalFloraGroMls ? formData.totalFloraGroMls : '0'}
-                  onChange={handleOnChange}
-                  type="number"
-                />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group col-6">
-                <label htmlFor="phDownMls">PH Down Mls</label>
-                <input
-                  id="phDownMls"
-                  name="phDownMls"
-                  className="form-control"
-                  value={formData.phDownMls ? formData.phDownMls : '0'}
-                  onChange={handleOnChange}
-                  type="number"
-                />
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="phUpMls">PH Up Mls</label>
-                <input
-                  id="phUpMls"
-                  name="phUpMls"
-                  className="form-control"
-                  value={formData.phUpMls ? formData.phUpMls : '0'}
-                  onChange={handleOnChange}
-                  type="number"
-                />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group col-6">
-                <label htmlFor="startingPh">Starting PH</label>
-                <input
-                  id="startingPh"
-                  name="startingPh"
-                  className="form-control"
-                  value={formData.startingPh ? formData.startingPh : '0'}
-                  onChange={handleOnChange}
-                  type="number"
-                />
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="endingPh">Ending PH</label>
-                <input
-                  id="endingPh"
-                  name="endingPh"
-                  className="form-control"
-                  value={formData.endingPh ?  formData.endingPh : '0'}
-                  onChange={handleOnChange}
-                  type="number"
-                />
-              </div>
-            </div>
-            <button type="submit" className="btn btn-primary">Update</button>
-          </form>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            <h3>Applications</h3>
-          </div>
-          <div className="col-12">
-            <ApplicationTable applications={nutrientBatchData.applications} />
-            <Button variant="primary" onClick={handleShow}>
-              Add Application
-            </Button>
-          </div>
-        </div>
-        <Modal show={show} onHide={handleClose}>
+        <Row>
+          <DetailsPageHeader
+            name="Nutrient Batch"
+            id={nutrientBatchData._id}
+            dateCreated={nutrientBatchData.dateCreated}
+          />
+          {showUpdateForm ?
+          <Button
+            style={{
+              width: '10%',
+              textAlign: 'center',
+              position: 'absolute',
+              top: '9vh',
+              right: '10vw',
+              zIndex: '99'
+            }}
+            onClick={closeUpdateForm}
+            variant="outline-danger"
+          >
+            <FontAwesomeIcon icon={faTimes} size="2x" />
+          </Button>
+        :
+          <Button
+            style={{
+              width: '10%',
+              textAlign: 'center',
+              position: 'absolute',
+              top: '9vh',
+              right: '10vw',
+              zIndex: '99'
+            }}
+            onClick={openUpdateForm}
+            variant="outline-warning"
+          >
+            <FontAwesomeIcon icon={faEdit} size="2x" />
+          </Button>
+        }
+        </Row>
+        {showUpdateForm &&
+          <Row>
+            <NutrientBatchUpdateForm
+              nutrientBatchData={nutrientBatchData}
+              updatedPlantDataHandler={handleUpdatedNutrientBatchData}
+            />
+          </Row>
+      }
+      <ApplicationTable
+        applications={nutrientBatchData.applications}
+        showModal={handleShow}
+      />
+        <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>New Application</Modal.Title>
           </Modal.Header>
@@ -263,7 +182,7 @@ const NutrientBatchDetails: React.FC<Props> = () => {
         </Modal>
       </>
     }
-  </>;
+  </Row>;
 };
 
 export default NutrientBatchDetails;

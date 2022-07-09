@@ -81,7 +81,7 @@ const CropDetails: React.FC<Props> = () => {
     setShowUpdateForm(toggle);
   };
 
-  return <>
+  return <Row>
     <Row>
       {cropData &&
         <DetailsPageHeader
@@ -164,7 +164,7 @@ const CropDetails: React.FC<Props> = () => {
         }
       </Col>
     </Row>
-  </>;
+  </Row>;
 };
 
 export default CropDetails;

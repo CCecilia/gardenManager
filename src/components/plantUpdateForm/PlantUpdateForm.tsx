@@ -19,9 +19,16 @@ const PlantUpdateForm: React.FC<Props> = ({plantData, updatedPlantDataHandler}) 
   const [numberOfLumensExposureInput, setNumberOfLumensExposureInput] = useState<number | null>(null);
   const [growthStageInput, setGrowthStageInput] = useState<string | null>(null);
   const [harvestedCheckBox, setHarvestedCheckBox] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleUpdateFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (loading) {
+      return;
+    }
+
+    setLoading(true);
     if (plantData) {
       if (commonNameInput) {
         plantData.commonName = commonNameInput;
@@ -55,6 +62,7 @@ const PlantUpdateForm: React.FC<Props> = ({plantData, updatedPlantDataHandler}) 
       if (updateForm) {
         updateForm.reset();
       }
+      setLoading(false);
     };
   };
 
