@@ -6,6 +6,7 @@ import { createNutrientBatchApplication, getNutrientBatchData, updateNutrientBat
 import { INutrientBatch } from '../../types/INutrientBatch';
 import { getIdFromLocation } from '../../utilities/StringHelpers';
 import { Modal, Button } from 'react-bootstrap';
+import DetailsPageHeader from '../../components/detailsPageHeader';
 
 type Props = {};
 
@@ -110,15 +111,11 @@ const NutrientBatchDetails: React.FC<Props> = () => {
   return <>
     {nutrientBatchData &&
       <>
-        <div className="row">
-          <h3>
-            Nutrient Batch
-          </h3>
-          <small className="text-muted">
-            ID: {nutrientBatchData._id}
-          </small>
-          <small className="text-muted">Date Created: {new Date(nutrientBatchData.dateCreated).toLocaleDateString()}</small>
-        </div>
+        <DetailsPageHeader
+          name="Nutrient Batch"
+          id={nutrientBatchData._id}
+          dateCreated={nutrientBatchData.dateCreated}
+        />
         <div className="row">
           <form onSubmit={handleSubmit}>
             <div className="form-row">

@@ -1,18 +1,15 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { getAllCropData } from '../../services/Crop.service';
 import { ICrop } from '../../types/Crop.interface';
 import { PageNames } from '../../types/PageNames.enum';
 import { RoutePaths } from '../../types/RoutePaths.enum';
-import { titleCase } from '../../utilities/Typography';
 import TableHeader from '../../components/tableHeader';
 import TableRow from './tableRow';
 import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import TablePageHeader from '../../components/tablePageHeader';
 
 const Crops: React.FC = () => {
   const auth = useAuth();
@@ -37,20 +34,10 @@ const Crops: React.FC = () => {
 
   return (
     <>
-      <Row style={{margin:'1vh auto'}}>
-        <Col xs={10}>
-          <h2 className="heading">{titleCase(PageNames.CROPS_PAGE)}</h2>
-        </Col>
-        <Col style={{textAlign:'right'}}>
-          <Link
-            to={RoutePaths.CREATE_CROP_ROUTE}
-            className="btn btn-success btn-round"
-            aria-current="page"
-          >
-            <FontAwesomeIcon icon={faPlus} />
-          </Link>
-        </Col>
-      </Row>
+      <TablePageHeader
+        pageName={PageNames.CROPS_PAGE}
+        createPageRoute={RoutePaths.CREATE_CROP_ROUTE}
+      />
       <Row>
         <Table responsive striped bordered hover variant="dark">
           <thead>

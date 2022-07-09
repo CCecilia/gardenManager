@@ -20,18 +20,12 @@ const TableRow: React.FC<Props> = ({ nutrientBatchData }) => {
   };
 
   return (
-    <tr onDoubleClick={(e) => handleRowDblClick(e, nutrientBatchData._id)}>
-      <td>{nutrientBatchData._id}</td>
+    <tr onClick={(e) => handleRowDblClick(e, nutrientBatchData._id)}>
       <td>{new Date(nutrientBatchData.dateCreated).toLocaleDateString()}</td>
       <td>{nutrientBatchData.totalWaterGallons}</td>
       <td>{nutrientBatchData.totalFloraMicroMls}</td>
       <td>{nutrientBatchData.totalFloraBloomMls}</td>
       <td>{nutrientBatchData.totalFloraGroMls}</td>
-      <td>{nutrientBatchData.phDownMls}</td>
-      <td>{nutrientBatchData.phUpMls}</td>
-      <td>{nutrientBatchData.startingPh}</td>
-      <td>{nutrientBatchData.endingPh}</td>
-      <td>{nutrientBatchData.applications.length}</td>
     </tr>
   );
 };

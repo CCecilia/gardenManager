@@ -10,7 +10,7 @@ type Props = {
 const TableRow: React.FC<Props> = ({ plantData }) => {
   const navigate = useNavigate();
 
-  const handleRowDblClick = (
+  const handleRowClick = (
     event: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
     id: string
   ) => {
@@ -20,7 +20,7 @@ const TableRow: React.FC<Props> = ({ plantData }) => {
   };
 
   return (
-    <tr onDoubleClick={(e) => handleRowDblClick(e, plantData._id)}>
+    <tr onClick={(e) => handleRowClick(e, plantData._id)}>
       <td>{plantData._id}</td>
       <td>{plantData.commonName}</td>
       <td>{plantData.dateCreated.toLocaleString()}</td>

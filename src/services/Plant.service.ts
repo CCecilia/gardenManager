@@ -24,6 +24,10 @@ export const getPlantData = async (id?: string): Promise<IPlant[] | IPlant> => {
 export const updatePlantData = async (update: Partial<IPlant>): Promise<IPlant> => {
   const endpointService = new EndpointService();
 
+  if (update.growthLogs?.length) {
+    delete update.growthLogs;
+  }
+
   const response = await axios.put(endpointService.allPlantData, {...update}, {
     headers: getHeaders(),
   });

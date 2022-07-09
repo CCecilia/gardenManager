@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import NutrientBatchTable from '../../components/nutrientBatchTable';
 import { useAuth } from '../../hooks/useAuth';
 import { getAllNutrientBatches } from '../../services/NutrientBatch.service';
 import { INutrientBatch } from '../../types/INutrientBatch';
 import { PageNames } from '../../types/PageNames.enum';
-import { titleCase } from '../../utilities/Typography';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { RoutePaths } from '../../types/RoutePaths.enum';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import TablePageHeader from '../../components/tablePageHeader';
 
 type Props = {};
 
@@ -35,20 +32,10 @@ const NutrientBatches: React.FC<Props> = () => {
   }, []);
 
   return <>
-    <Row style={{margin:'1vh auto'}}>
-      <Col xs={10}>
-        <h2 className="heading">{titleCase(PageNames.NUTRIENT_BATCHES_PAGE)}</h2>
-      </Col>
-      <Col style={{textAlign:'right'}}>
-        <Link
-          to={RoutePaths.CREATE_CROP_ROUTE}
-          className="btn btn-success btn-round"
-          aria-current="page"
-        >
-          <FontAwesomeIcon icon={faPlus} />
-        </Link>
-      </Col>
-    </Row>
+    <TablePageHeader
+      pageName={PageNames.NUTRIENT_BATCHES_PAGE}
+      createPageRoute={RoutePaths.CREATE_CROP_ROUTE}
+    />
     <Row>
       {nutrientBatchData &&
         <NutrientBatchTable nutrientBatches={nutrientBatchData}></NutrientBatchTable>

@@ -9,6 +9,11 @@ import PlantsTable from '../../components/plantsTable';
 import { useAuth } from '../../hooks/useAuth';
 import { INutrientBatch } from '../../types/INutrientBatch';
 import NutrientBatchTable from '../../components/nutrientBatchTable';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import DetailsPageHeader from '../../components/detailsPageHeader';
 
 type Props = {};
 
@@ -64,70 +69,55 @@ const CropDetails: React.FC<Props> = () => {
   };
 
   return <>
-    <div className="row">
+    <Row>
       {cropData &&
-        <div className="row">
-          <h3>
-            {titleCase(cropData.name)}&nbsp;
-          </h3>
-          <small className="text-muted">
-            ID: {cropData._id}
-          </small>
-          <small className="text-muted">Date Created: { new Date(cropData.dateCreated).toLocaleDateString() }</small>
-        </div>
+        <DetailsPageHeader
+          name={cropData.name}
+          id={cropData._id}
+          dateCreated={cropData.dateCreated}
+        />
       }
-    </div>
-    <div className="row">
-      <form onSubmit={handleSubmit}>
-        <div className="form-row">
-          <div className="form-group col-6">
-            <label htmlFor="name">Name</label>
-            <input
-              id="name"
-              name="name"
-              placeholder={
-                cropData ? titleCase(cropData.name) : 'Name'
-              }
-              className="form-control"
-              value={cropName}
-              onChange={handleNameChange}
-            />
-          </div>
-          <div className="form-group col-6">
-            <label htmlFor="id">ID</label>
-            <input
-              id="id"
-              name="id"
-              placeholder={cropData ? titleCase(cropData._id) : 'ID'}
-              className="form-control"
-              readOnly={true}
-              value={cropData ? titleCase(cropData._id) : 'ID'}
-            />
-          </div>
-        </div>
-        <button type="submit" className="btn btn-primary">Update</button>
-      </form>
-    </div>
-    <div className="row">
-      <div className="col-12">
+    </Row>
+    <Row>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="formName">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            id="name"
+            name="name"
+            placeholder={
+              cropData ? titleCase(cropData.name) : 'Name'
+            }
+            className="form-control"
+            value={cropName}
+            onChange={(e: any) => handleNameChange(e)}
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Update
+        </Button>
+      </Form>
+    </Row>
+    <Row>
+      <Col xs={12} style={{textAlign: 'center'}}>
         <h2 className="heading">Plants</h2>
-      </div>
-      <div className="col-12">
+      </Col>
+      <Col xs={12}>
         {cropPlantData &&
           <PlantsTable plants={cropPlantData}/>
         }
-      </div>
-    </div>
-    <div className="row">
-      <div className="col-12">
+      </Col>
+    </Row>
+    <Row>
+      <Col xs={12} style={{textAlign: 'center'}}>
         <h2 className="heading">Nutrient Batches</h2>
-      </div>
-      <div className="col-12">
+      </Col>
+      <Col xs={12}>
         {cropNutrientBatchData &&
           <NutrientBatchTable nutrientBatches={cropNutrientBatchData}/>
         }
-      </div>
-    </div>
+      </Col>
+    </Row>
   </>;
 };
 

@@ -3,15 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { IPlant } from '../../types/Plant.interface';
 import { getPlantData } from '../../services/Plant.service';
 import { PageNames } from '../../types/PageNames.enum';
-import { titleCase } from '../../utilities/Typography';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../../types/RoutePaths.enum';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import PlantsTable from '../../components/plantsTable';
 import { useAuth } from '../../hooks/useAuth';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import TablePageHeader from '../../components/tablePageHeader';
 
 type Props = {};
 
@@ -37,21 +34,11 @@ const Plants: React.FC<Props> = () => {
 
   return (
     <>
-      <Row style={{margin:'1vh auto'}}>
-        <Col xs={10}>
-          <h2 className="heading">{titleCase(PageNames.PLANTS_PAGE)}</h2>
-        </Col>
-        <Col style={{textAlign:'right'}}>
-          <Link
-            to={RoutePaths.CREATE_PLANT_ROUTE}
-            className="btn btn-success btn-round"
-            aria-current="page"
-          >
-            <FontAwesomeIcon icon={faPlus} />
-          </Link>
-        </Col>
-      </Row>
-      <Row>
+      <TablePageHeader
+        pageName={PageNames.PLANTS_PAGE}
+        createPageRoute={RoutePaths.CREATE_PLANT_ROUTE}
+      />
+      <Row style={{textAlign: 'center'}}>
         {plantData &&
           <PlantsTable plants={plantData}></PlantsTable>
         }

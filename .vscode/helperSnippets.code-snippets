@@ -1,0 +1,44 @@
+{
+	"New Component": {
+		"scope": "typescript, typescriptreact",
+		"prefix": "new-component",
+		"body": [
+      "import React from 'react';\n",
+      "type Props = {};\n",
+      "const $1: React.FC<Props> = () => {",
+      "\treturn <>",
+      "\t\t<h1>$1</h1>",
+      "\t</>;",
+      "};",
+      "export default $1;"
+		],
+		"description": "creates a new component"
+	},
+	"New Page Component": {
+		"scope": "typescript, typescriptreact",
+		"prefix": "new-page-component",
+		"body": [
+      "import React, { useEffect } from 'react';",
+      "import { useNavigate } from 'react-router-dom';",
+      "import { useAuth } from '../../hooks/useAuth';\n",
+      "type Props = {};\n",
+      "const $1: React.FC<Props> = () => {",
+      "\tconst auth = useAuth();",
+      "\tconst navigate = useNavigate();\n",
+      "\tuseEffect(() => {",
+      "\t\tif (auth) {",
+      "\t\t\tconst [shouldRedirect, redirectRoute] = auth.shouldRedirect();\n",
+      "\t\t\tif ( shouldRedirect && redirectRoute ) {",
+      "\t\t\t\tnavigate(redirectRoute);",
+      "\t\t\t}",
+      "\t\t}",
+      "\t});\n",
+      "\treturn <>",
+      "\t\t<h1>Create Crop</h1>",
+      "\t</>;",
+      "};\n",
+      "export default $1;"
+		],
+		"description": "Creates a new page component."
+	}
+}
