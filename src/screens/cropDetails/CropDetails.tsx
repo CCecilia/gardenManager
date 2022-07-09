@@ -14,6 +14,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import DetailsPageHeader from '../../components/detailsPageHeader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {};
 
@@ -26,6 +28,7 @@ const CropDetails: React.FC<Props> = () => {
   const [cropName, setCropName] = useState<string>('');
   const [cropPlantData, setCropPlantData] = useState<IPlant[] | null>(null);
   const [cropNutrientBatchData, setCropNutrientBatchData] = useState<INutrientBatch[] | null>(null);
+  const [showUpdateForm, setShowUpdateForm] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -68,6 +71,16 @@ const CropDetails: React.FC<Props> = () => {
     setCropName(event.currentTarget.value);
   };
 
+  const handleEditButtonOnClick = () => {
+    let toggle = true;
+
+    if (showUpdateForm) {
+      toggle = false;
+    }
+    console.log('toggle ', toggle);
+    setShowUpdateForm(toggle);
+  };
+
   return <>
     <Row>
       {cropData &&
@@ -77,27 +90,60 @@ const CropDetails: React.FC<Props> = () => {
           dateCreated={cropData.dateCreated}
         />
       }
-    </Row>
-    <Row>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formName">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            id="name"
-            name="name"
-            placeholder={
-              cropData ? titleCase(cropData.name) : 'Name'
-            }
-            className="form-control"
-            value={cropName}
-            onChange={(e: any) => handleNameChange(e)}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Update
+      {showUpdateForm ?
+        <Button
+          style={{
+            width: '10%',
+            textAlign: 'center',
+            position: 'absolute',
+            top: '9vh',
+            right: '10vw',
+            zIndex: '99'
+          }}
+          onClick={handleEditButtonOnClick}
+          variant="outline-danger"
+        >
+          <FontAwesomeIcon icon={faTimes} size="2x" />
         </Button>
-      </Form>
+      :
+        <Button
+          style={{
+            width: '10%',
+            textAlign: 'center',
+            position: 'absolute',
+            top: '9vh',
+            right: '10vw',
+            zIndex: '99'
+          }}
+          onClick={handleEditButtonOnClick}
+          variant="outline-warning"
+        >
+          <FontAwesomeIcon icon={faEdit} size="2x" />
+        </Button>
+      }
     </Row>
+    {showUpdateForm &&
+      <Row>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formName">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              id="name"
+              name="name"
+              placeholder={
+                cropData ? titleCase(cropData.name) : 'Name'
+              }
+              className="form-control"
+              value={cropName}
+              onChange={(e: any) => handleNameChange(e)}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Update
+          </Button>
+        </Form>
+      </Row>
+    }
     <Row>
       <Col xs={12} style={{textAlign: 'center'}}>
         <h2 className="heading">Plants</h2>

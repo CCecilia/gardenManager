@@ -4,12 +4,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { createGrowthLog } from '../../services/Plant.service';
 import { IPlant } from '../../types/Plant.interface';
+import { IGrowthLog } from '../../types/IGrowthLog';
 
 type Props = {
-  plantData: IPlant
+  plantData: IPlant,
+  updatedGrowthLogHandler: (updatedGrowthLogs: IGrowthLog) => void;
 };
 
-const CreateGrowthLogForm: React.FC<Props> = ({plantData}) => {
+const CreateGrowthLogForm: React.FC<Props> = ({plantData, updatedGrowthLogHandler}) => {
   const [plantImgInput, setPlantImgInput] = useState<string | null>(null);
   const [numberOfLeavesInput, setNumberOfLeaves] = useState<number | null>(null);
   const [heightInput, setHeightInput] = useState<number | null>(null);
@@ -17,8 +19,13 @@ const CreateGrowthLogForm: React.FC<Props> = ({plantData}) => {
   const handleCreateFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (plantData && numberOfLeavesInput && heightInput && plantImgInput) {
-      console.log(plantImgInput, numberOfLeavesInput, heightInput, plantData?._id);
-      await createGrowthLog(plantData._id, numberOfLeavesInput, heightInput, plantImgInput);
+      const newGrowthLog = await createGrowthLog(plantData._id, numberOfLeavesInput, heightInput, plantImgInput);
+      updatedGrowthLogHandler(newGrowthLog);
+      const growthForm = document.getElementById('createGrowthLogForm') as HTMLFormElement | null;
+
+      if (growthForm) {
+        growthForm.reset();
+      };
     }
   };
 
@@ -51,12 +58,13 @@ const CreateGrowthLogForm: React.FC<Props> = ({plantData}) => {
       <h3>Add Growth Log</h3>
     </Row>
     <Row>
-    <Form onSubmit={handleCreateFormSubmit}>
+    <Form id="createGrowthLogForm" onSubmit={handleCreateFormSubmit}>
       <Form.Group className="mb-3">
         <Form.Label>Plant Image</Form.Label>
         <Form.Control
           id="plantPhoto"
-          name="plantPhoto"
+            name="plantPhoto"
+            type="file"
           onChange={(e: any) => handleCreateGrowthLogImgInputOnChange(e)}
         />
       </Form.Group>

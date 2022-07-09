@@ -13,6 +13,7 @@ import CreateGrowthLogForm from '../../components/createGrowthLogForm';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { IGrowthLog } from '../../types/IGrowthLog';
 
 type Props = {
 };
@@ -65,6 +66,13 @@ const PlantDetails: React.FC<Props> = () => {
     setShowCreateGrowthLogForm(toggle);
   };
 
+  const updateGrowthLogs = (updatedGrowthLog: IGrowthLog) => {
+    if (plantData) {
+      plantData.growthLogs.push(updatedGrowthLog);
+    }
+    setPlantData(plantData);
+  };
+
   return (
     <>
       {plantData &&
@@ -87,7 +95,7 @@ const PlantDetails: React.FC<Props> = () => {
               onClick={handleEditButtonOnClick}
               variant="outline-danger"
             >
-                <FontAwesomeIcon icon={faTimes} size="2x" />
+              <FontAwesomeIcon icon={faTimes} size="2x" />
             </Button>
           :
             <Button
@@ -102,7 +110,7 @@ const PlantDetails: React.FC<Props> = () => {
               onClick={handleEditButtonOnClick}
               variant="outline-warning"
             >
-                <FontAwesomeIcon icon={faEdit} size="2x" />
+              <FontAwesomeIcon icon={faEdit} size="2x" />
             </Button>
           }
           {showUpdateForm ?
@@ -117,7 +125,7 @@ const PlantDetails: React.FC<Props> = () => {
             showingCreateGrowthLogForm={showCreateGrowthLogForm}
           />
           {showCreateGrowthLogForm &&
-            <CreateGrowthLogForm plantData={plantData} />
+            <CreateGrowthLogForm plantData={plantData} updatedGrowthLogHandler={updateGrowthLogs} />
           }
         </Row>
       }

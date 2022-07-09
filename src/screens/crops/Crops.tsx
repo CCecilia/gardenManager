@@ -16,7 +16,6 @@ const Crops: React.FC = () => {
   const navigate = useNavigate();
   const [cropData, setCropData] = useState<ICrop[] | null>(null);
 
-
   useEffect(() => {
     (async () => {
       if (auth) {
