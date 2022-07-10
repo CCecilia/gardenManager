@@ -114,20 +114,29 @@ const PlantDetails: React.FC<Props> = () => {
               <FontAwesomeIcon icon={faEdit} size="2x" />
             </Button>
           }
-          {showUpdateForm ?
+
+          <PlantGrowthChart plantId={plantData._id} />
+          {showUpdateForm &&
             <PlantUpdateForm
               plantData={plantData}
               updatedPlantDataHandler={handleUpdatedPlantData}
             />
-          : null}
-          <PlantGrowthChart plantId={plantData._id} />
-          <GrowthLogCarousel
-            plantData={plantData}
-            editButtonHandler={handleAddGrowthLogButtonOnClick}
-            showingCreateGrowthLogForm={showCreateGrowthLogForm}
-          />
-          {showCreateGrowthLogForm &&
-            <CreateGrowthLogForm plantData={plantData} updatedGrowthLogHandler={updateGrowthLogs} />
+          }
+
+
+          {showCreateGrowthLogForm ?
+            <CreateGrowthLogForm
+              plantData={plantData}
+              updatedGrowthLogHandler={updateGrowthLogs}
+              editButtonHandler={handleAddGrowthLogButtonOnClick}
+              showingCreateGrowthLogForm={showCreateGrowthLogForm}
+            />
+          :
+            <GrowthLogCarousel
+              plantData={plantData}
+              editButtonHandler={handleAddGrowthLogButtonOnClick}
+              showingCreateGrowthLogForm={showCreateGrowthLogForm}
+            />
           }
         </Row>
       }

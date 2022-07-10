@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { createGrowthLog } from '../../services/Plant.service';
 import { IPlant } from '../../types/Plant.interface';
 import { IGrowthLog } from '../../types/IGrowthLog';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   plantData: IPlant,
   updatedGrowthLogHandler: (updatedGrowthLogs: IGrowthLog) => void;
+  editButtonHandler: () => void,
+  showingCreateGrowthLogForm: boolean
 };
 
-const CreateGrowthLogForm: React.FC<Props> = ({plantData, updatedGrowthLogHandler}) => {
+const CreateGrowthLogForm: React.FC<Props> = ({
+  plantData,
+  updatedGrowthLogHandler,
+  editButtonHandler,
+  showingCreateGrowthLogForm
+}) => {
   const [plantImgInput, setPlantImgInput] = useState<string | null>(null);
   const [numberOfLeavesInput, setNumberOfLeaves] = useState<number | null>(null);
   const [heightInput, setHeightInput] = useState<number | null>(null);
@@ -54,8 +64,21 @@ const CreateGrowthLogForm: React.FC<Props> = ({plantData, updatedGrowthLogHandle
 
 
   return <Row>
-    <Row style={{marginTop: '1vh'}}>
-      <h3>Add Growth Log</h3>
+    <Row style={{ margin: '1vh auto' }}>
+      <Col xs={10}>
+        <h3>Growth Logs</h3>
+      </Col>
+      <Col xs={2}>
+        {showingCreateGrowthLogForm ?
+          <Button onClick={editButtonHandler} variant="outline-danger">
+            <FontAwesomeIcon icon={faTimes} />
+          </Button>
+        :
+          <Button onClick={editButtonHandler} variant="outline-success">
+            <FontAwesomeIcon icon={faPlus}/>
+          </Button>
+        }
+      </Col>
     </Row>
     <Row>
     <Form id="createGrowthLogForm" onSubmit={handleCreateFormSubmit}>
@@ -63,8 +86,8 @@ const CreateGrowthLogForm: React.FC<Props> = ({plantData, updatedGrowthLogHandle
         <Form.Label>Plant Image</Form.Label>
         <Form.Control
           id="plantPhoto"
-            name="plantPhoto"
-            type="file"
+          name="plantPhoto"
+          type="file"
           onChange={(e: any) => handleCreateGrowthLogImgInputOnChange(e)}
         />
       </Form.Group>
@@ -76,6 +99,7 @@ const CreateGrowthLogForm: React.FC<Props> = ({plantData, updatedGrowthLogHandle
           type="number"
           value={numberOfLeavesInput || ''}
           onChange={(e: any) => handleUpdateFormInputOnChange(e, setNumberOfLeaves)}
+          required={true}
         />
       </Form.Group>
       <Form.Group className="mb-3">
@@ -86,6 +110,7 @@ const CreateGrowthLogForm: React.FC<Props> = ({plantData, updatedGrowthLogHandle
           type="number"
           value={heightInput || ''}
           onChange={(e: any) => handleUpdateFormInputOnChange(e, setHeightInput)}
+          required={true}
         />
       </Form.Group>
       <Button variant="primary" type="submit">
