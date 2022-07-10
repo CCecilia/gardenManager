@@ -16,6 +16,7 @@ import Button from 'react-bootstrap/Button';
 import DetailsPageHeader from '../../components/detailsPageHeader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
+import CropGrowthChart from '../../components/cropGrowthChart';
 
 type Props = {};
 
@@ -143,6 +144,9 @@ const CropDetails: React.FC<Props> = () => {
           </Button>
         </Form>
       </Row>
+    }
+    {cropData &&
+      <CropGrowthChart cropId={cropData._id} />
     }
     <Row>
       <Col xs={12} style={{textAlign: 'center'}}>

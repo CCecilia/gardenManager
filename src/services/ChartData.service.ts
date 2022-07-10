@@ -11,11 +11,22 @@ export type ChartData = {
   backgroundColor: string
 }
 
-export const getPlantGrowthOverTimeData = async (plantId: string) => {
-  const response = await axios.get(endpointService.plantGrowthOverTimeData, {
+export const getPlantGrowthChartData = async (plantId: string): Promise<ChartData> => {
+  const response = await axios.get(endpointService.plantGrowthChartData, {
     headers: getHeaders(),
     params: {
       plantId
+    }
+  });
+
+  return response.data as ChartData;
+};
+
+export const getCropGrowthChartData = async (cropId: string): Promise<ChartData> => {
+  const response = await axios.get(endpointService.cropGrowthChartData, {
+    headers: getHeaders(),
+    params: {
+      cropId
     }
   });
 

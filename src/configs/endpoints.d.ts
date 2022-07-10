@@ -23,6 +23,7 @@ export type EndPoints = {
     search: string;
   };
   chartData: {
-    getPlantGrowthOverTimeData: string;
+    getPlantGrowthChartData: string;
+    getCropGrowthChartData: string;
   }
 };

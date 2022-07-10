@@ -9,17 +9,17 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import { ChartData, getCropGrowthChartData } from '../../services/ChartData.service';
 import Row from 'react-bootstrap/Row';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { Line } from 'react-chartjs-2';
-import { ChartData, getPlantGrowthOverTimeData } from '../../services/ChartData.service';
 
 type Props = {
-  plantId: string
+  cropId: string;
 };
 
-const IndividualPlantAnalytics: React.FC<Props> = ({plantId}) => {
+const CropGrowthChart: React.FC<Props> = ({ cropId }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -34,7 +34,7 @@ const IndividualPlantAnalytics: React.FC<Props> = ({plantId}) => {
   useEffect(() => {
     (async () => {
 
-      const data = (await getPlantGrowthOverTimeData(plantId)) as ChartData;
+      const data = (await getCropGrowthChartData(cropId)) as ChartData;
       setChartData(data);
     })();
   }, []);
@@ -99,4 +99,4 @@ const IndividualPlantAnalytics: React.FC<Props> = ({plantId}) => {
     </Row>
   </Row>;
 };
-export default IndividualPlantAnalytics;
+export default CropGrowthChart;

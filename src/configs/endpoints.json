@@ -23,6 +23,7 @@
     "search": "/search"
   },
   "chartData": {
-    "getPlantGrowthOverTimeData": "/analytics/plants/plantGrowthOverTime"
+    "getPlantGrowthChartData": "/chartData/plants/growthData",
+    "getCropGrowthChartData": "/chartData/crops/growthData"
   }
 }
