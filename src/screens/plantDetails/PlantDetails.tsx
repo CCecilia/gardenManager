@@ -14,6 +14,7 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { IGrowthLog } from '../../types/IGrowthLog';
+import IndividualPlantAnalytics from '../../components/individualPlantAnalytics';
 
 type Props = {
 };
@@ -119,6 +120,7 @@ const PlantDetails: React.FC<Props> = () => {
               updatedPlantDataHandler={handleUpdatedPlantData}
             />
           : null}
+          <IndividualPlantAnalytics plantId={plantData._id} />
           <GrowthLogCarousel
             plantData={plantData}
             editButtonHandler={handleAddGrowthLogButtonOnClick}

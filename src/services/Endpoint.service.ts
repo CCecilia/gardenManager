@@ -6,7 +6,7 @@ import { EndPoints } from '../configs/endpoints';
 
 export default class EndpointService {
   // private baseUri: string = env.GARDEN_MANAGER_API;
-  private baseUri: string = 'http://localhost:5000';
+  private baseUri: string = process.env.BASE_URI as string;
   private endpoints: EndPoints = EndpointConfig;
 
   get signUp(): string {
@@ -68,5 +68,9 @@ export default class EndpointService {
 
   get search(): string {
     return this.baseUri + this.endpoints.search.search;
+  }
+
+  get plantGrowthOverTimeData(): string {
+    return this.baseUri + this.endpoints.chartData.getPlantGrowthOverTimeData;
   }
 };

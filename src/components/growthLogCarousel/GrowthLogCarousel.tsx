@@ -39,7 +39,7 @@ const GrowthLogCarousel: React.FC<Props> = ({plantData, editButtonHandler, showi
             return <Carousel.Item key={index}>
               <img
                 className="d-block w-100"
-                src={growthLog.img}
+                src={growthLog.img.includes('data:image/png;base64') ? growthLog.img : `data:image/png;base64,${growthLog.img}`}
                 alt={plantData.commonName}
               />
               <Carousel.Caption>

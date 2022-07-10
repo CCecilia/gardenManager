@@ -12,7 +12,7 @@ const PlantsTable: React.FC<Props> = ({ plants }) => {
     <table className="table table-striped table-dark">
       <thead>
         <tr>
-          <TableHeader key={0} header="ID"></TableHeader>
+          <TableHeader key={0} header="Location"></TableHeader>
           <TableHeader key={1} header="Common Name"></TableHeader>
           <TableHeader key={2} header="Date Created"></TableHeader>
         </tr>

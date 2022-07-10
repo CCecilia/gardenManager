@@ -21,5 +21,8 @@ export type EndPoints = {
   };
   search: {
     search: string;
+  };
+  chartData: {
+    getPlantGrowthOverTimeData: string;
   }
 };

@@ -21,5 +21,8 @@
   },
   "search": {
     "search": "/search"
+  },
+  "chartData": {
+    "getPlantGrowthOverTimeData": "/analytics/plants/plantGrowthOverTime"
   }
 }

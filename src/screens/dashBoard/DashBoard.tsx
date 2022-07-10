@@ -19,7 +19,6 @@ import { useNavigate } from 'react-router-dom';
 const Dashboard: React.FC = () => {
   const auth = useAuth();
   const navigate = useNavigate();
-  console.log(auth);
 
   useEffect(() => {
     if (auth) {

@@ -21,7 +21,7 @@ const TableRow: React.FC<Props> = ({ plantData }) => {
 
   return (
     <tr onClick={(e) => handleRowClick(e, plantData._id)}>
-      <td>{plantData._id}</td>
+      <td>{plantData.location.area} <br/> Row: {plantData.location.row} Col: {plantData.location.column}</td>
       <td>{plantData.commonName}</td>
       <td>{plantData.dateCreated.toLocaleString()}</td>
     </tr>
