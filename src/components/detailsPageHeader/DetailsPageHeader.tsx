@@ -1,20 +1,29 @@
-import React from 'react';import Row from 'react-bootstrap/Row';
+import React from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { titleCase } from '../../utilities/Typography';
 
 type Props = {
   name: string | null,
   id: string,
-  dateCreated: Date
+  dateCreated: Date,
+  showForm: () => void,
+  isShowingForm: boolean
 };
 
-const DetailsPageHeader: React.FC<Props> = ({name, id, dateCreated}) => {
+const DetailsPageHeader: React.FC<Props> = ({ name, id, dateCreated, showForm }) => {
   return <>
     <Row style={{marginTop: '1vh'}}>
       {name &&
         <Row>
-          <h3>
-            {titleCase(name)}&nbsp;
-          </h3>
+          <Col xs={10}>
+            <h3>
+              {titleCase(name)}&nbsp;
+            </h3>
+          </Col>
+          <Col xs={2}>
+
+          </Col>
         </Row>
       }
       <Row>
