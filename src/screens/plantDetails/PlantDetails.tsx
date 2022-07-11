@@ -17,21 +17,21 @@ import { IGrowthLog } from '../../types/IGrowthLog';
 import PlantGrowthChart from '../../components/plantGrowthChart';
 import Unauthorized from '../../components/unauthorized';
 
-type Props = {
-};
+type Props = {};
 
 const PlantDetails: React.FC<Props> = () => {
   const auth = useAuth();
   const location = useLocation();
   const [plantData, setPlantData] = useState<IPlant | null>(null);
-  const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [showCreateGrowthLogForm, setShowCreateGrowthLogForm] = useState(false);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const openUpdateForm = () => setShowUpdateForm(true);
+  const closeUpdateForm = () => setShowUpdateForm(false);
 
   useEffect(() => {
     (async () => {
       const id = getIdFromLocation(location);
       const data = await getPlantDataById(id);
-      console.log(data);
       setPlantData(data);
     })();
   }, []);
@@ -46,7 +46,7 @@ const PlantDetails: React.FC<Props> = () => {
     if (showUpdateForm) {
       toggle = false;
     }
-    console.log('toggle ', toggle);
+
     setShowUpdateForm(toggle);
   };
 
@@ -56,7 +56,7 @@ const PlantDetails: React.FC<Props> = () => {
     if (showCreateGrowthLogForm) {
       toggle = false;
     }
-    console.log('toggle ', toggle);
+
     setShowCreateGrowthLogForm(toggle);
   };
 
@@ -77,6 +77,9 @@ const PlantDetails: React.FC<Props> = () => {
                 name={plantData.commonName}
                 id={plantData._id}
                 dateCreated={plantData.dateCreated}
+                showUpdateForm={showUpdateForm}
+                openUpdateForm={openUpdateForm}
+                closeUpdateForm={closeUpdateForm}
               />
               {showUpdateForm ?
                 <Button
