@@ -14,8 +14,6 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import DetailsPageHeader from '../../components/detailsPageHeader';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import CropGrowthChart from '../../components/cropGrowthChart';
 
 type Props = {};
@@ -29,7 +27,9 @@ const CropDetails: React.FC<Props> = () => {
   const [cropName, setCropName] = useState<string>('');
   const [cropPlantData, setCropPlantData] = useState<IPlant[] | null>(null);
   const [cropNutrientBatchData, setCropNutrientBatchData] = useState<INutrientBatch[] | null>(null);
-  const [showUpdateForm, setShowUpdateForm] = useState<boolean>(false);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const openUpdateForm = () => setShowUpdateForm(true);
+  const closeUpdateForm = () => setShowUpdateForm(false);
 
   useEffect(() => {
     (async () => {
@@ -72,15 +72,6 @@ const CropDetails: React.FC<Props> = () => {
     setCropName(event.currentTarget.value);
   };
 
-  const handleEditButtonOnClick = () => {
-    let toggle = true;
-
-    if (showUpdateForm) {
-      toggle = false;
-    }
-    console.log('toggle ', toggle);
-    setShowUpdateForm(toggle);
-  };
 
   return <Row>
     <Row>
@@ -89,38 +80,10 @@ const CropDetails: React.FC<Props> = () => {
           name={cropData.name}
           id={cropData._id}
           dateCreated={cropData.dateCreated}
+          showUpdateForm={showUpdateForm}
+          openUpdateForm={openUpdateForm}
+          closeUpdateForm={closeUpdateForm}
         />
-      }
-      {showUpdateForm ?
-        <Button
-          style={{
-            width: '10%',
-            textAlign: 'center',
-            position: 'absolute',
-            top: '9vh',
-            right: '10vw',
-            zIndex: '99'
-          }}
-          onClick={handleEditButtonOnClick}
-          variant="outline-danger"
-        >
-          <FontAwesomeIcon icon={faTimes} size="2x" />
-        </Button>
-      :
-        <Button
-          style={{
-            width: '10%',
-            textAlign: 'center',
-            position: 'absolute',
-            top: '9vh',
-            right: '10vw',
-            zIndex: '99'
-          }}
-          onClick={handleEditButtonOnClick}
-          variant="outline-warning"
-        >
-          <FontAwesomeIcon icon={faEdit} size="2x" />
-        </Button>
       }
     </Row>
     {showUpdateForm &&

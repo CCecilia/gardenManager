@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import './sw';
 
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
@@ -21,3 +22,7 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.ts').then(() => console.log('service worker registered'));
+}

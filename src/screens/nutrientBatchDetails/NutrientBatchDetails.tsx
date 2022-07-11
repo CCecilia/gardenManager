@@ -88,6 +88,7 @@ const NutrientBatchDetails: React.FC<Props> = () => {
     setNutrientBatchData(updatedBatchData);
   };
 
+
   return <>
     {auth && auth.user ?
       <Row>
@@ -98,6 +99,9 @@ const NutrientBatchDetails: React.FC<Props> = () => {
                 name="Nutrient Batch"
                 id={nutrientBatchData._id}
                 dateCreated={nutrientBatchData.dateCreated}
+                showUpdateForm={showUpdateForm}
+                openUpdateForm={openUpdateForm}
+                closeUpdateForm={closeUpdateForm}
               />
               {showUpdateForm ?
                 <Button
