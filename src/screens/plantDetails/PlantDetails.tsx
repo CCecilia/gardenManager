@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { IPlant } from '../../types/Plant.interface';
-import { getPlantData } from '../../services/Plant.service';
+import { getPlantDataById } from '../../services/Plant.service';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getIdFromLocation } from '../../utilities/StringHelpers';
 import { useAuth } from '../../hooks/useAuth';
@@ -37,7 +37,7 @@ const PlantDetails: React.FC<Props> = () => {
         };
       };
       const id = getIdFromLocation(location);
-      const data = (await getPlantData(id)) as IPlant;
+      const data = await getPlantDataById(id);
       console.log(data);
       setPlantData(data);
     })();

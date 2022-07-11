@@ -1,49 +1,51 @@
 import { INutrientBatch } from './../types/INutrientBatch';
-import axios from 'axios';
 import EndpointService from './Endpoint.service';
-import { getHeaders } from './Header.service';
+import { makeRequest } from './Network.service';
 
 const endpointService = new EndpointService();
 
 export const getAllNutrientBatches = async () => {
-  const response = await axios.get(endpointService.allNutrientBatchData, {
-    headers: getHeaders(),
+  const response = await makeRequest<INutrientBatch[]>(endpointService.allNutrientBatchData, {
+    method: 'GET',
   });
 
-  return response.data as INutrientBatch[];
+  return response;
 };
 
 export const getNutrientBatchData = async (id: string): Promise<INutrientBatch> => {
-  const response = await axios.get(endpointService.getNutrientBatchById(id), {
-    headers: getHeaders(),
+  const response = await makeRequest<INutrientBatch>(endpointService.getNutrientBatchById(id), {
+    method: 'GET',
   });
 
-  return response.data as INutrientBatch;
+  return response;
 };
 
 export const updateNutrientBatchData = async (update: Partial<INutrientBatch>): Promise<INutrientBatch> => {  
-  const response = await axios.put(endpointService.allNutrientBatchData, {...update}, {
-    headers: getHeaders(),
+  const response = await makeRequest<INutrientBatch>(endpointService.allNutrientBatchData, {
+    method: 'PUT',
+    body: JSON.stringify(update)
   });
 
-  return response.data as INutrientBatch;
+  return response;
 };
 
 export const createNutrientBatchApplication = async (amountUsed: number, nutrientBatchId: string) => {
-  const response = await axios.post(endpointService.createNutrientBatchApplication, {amountUsed, nutrientBatchId}, {
-    headers: getHeaders(),
+  const response = await makeRequest<INutrientBatch>(endpointService.allNutrientBatchData, {
+    method: 'POST',
+    body: JSON.stringify({
+      amountUsed,
+      nutrientBatchId
+    })
   });
 
-  return response.data as INutrientBatch;
+  return response;
 };
 
 export const deleteNutrientBatchApplication = async (applicationId: string) => {
-  const response = await axios.delete(endpointService.createNutrientBatchApplication, {
-    headers: getHeaders(),
-    params: {
-      applicationId
-    }
+  const uri = `${endpointService.allNutrientBatchData}?applicationId=${applicationId}`;
+  const response = await makeRequest<INutrientBatch>(uri, {
+    method: 'DELETE'
   });
 
-  return response.data as INutrientBatch;
+  return response;
 };

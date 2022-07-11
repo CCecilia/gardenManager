@@ -1,53 +1,52 @@
+import { makeRequest } from './Network.service';
 import { INutrientBatch } from './../types/INutrientBatch';
 import EndpointService from './Endpoint.service';
 import { ICrop } from '../types/Crop.interface';
-import axios, { AxiosResponse } from 'axios';
-import { getHeaders } from './Header.service';
 import { IPlant } from '../types/Plant.interface';
 
 const endpointService = new EndpointService();
 
 
 export const getCropData = async (id: string): Promise<ICrop> => {
-  const response = await axios.get(endpointService.getCropDataById(id), {
-    headers: getHeaders(),
+  const response = await makeRequest<ICrop>(endpointService.getCropDataById(id), {
+    method: 'GET',
   });
-
-  return response.data as ICrop;
+  return response;
 };
 
 export const getAllCropData = async (): Promise<ICrop[]> => {
-  const response: AxiosResponse = await axios.get(endpointService.allCropData, {
-    headers: getHeaders(),
+  const response = await makeRequest<ICrop[]>(endpointService.allCropData, {
+    method: 'GET',
   });
 
-  return response.data as ICrop[];
+  return response;
 };
 
-export const updateCropData = async (update: Partial<ICrop>): Promise<ICrop> => {  
-  const response = await axios.put(endpointService.allCropData, {...update}, {
-    headers: getHeaders(),
+export const updateCropData = async (update: Partial<ICrop>): Promise<ICrop> => {
+  const response = await makeRequest<ICrop>(endpointService.allCropData, {
+    method: 'PUT',
+    body: JSON.stringify(update)
   });
 
-  return response.data as ICrop;
+  return response;
 };
 
 
 export const getCropPlantData = async (plantIds: string[]): Promise<IPlant[]> => {
-  const response = await axios.get(endpointService.cropPlantData, {
-    headers: getHeaders(),
-    params: {plantIds: plantIds.join(',')}
+  const uri = `${endpointService.cropPlantData}?plantIds=${plantIds.join(',')}`;
+  const response = await makeRequest<IPlant[]>(uri, {
+    method: 'GET'
   });
 
-  return response.data as IPlant[];
+  return response;
 };
 
 
 export const getCropNutrientBatchData = async (nutrientBatchIds: string[]): Promise<INutrientBatch[]> => {
-  const response = await axios.get(endpointService.cropNutrientBatchData, {
-    headers: getHeaders(),
-    params: {nutrientBatchIds: nutrientBatchIds.join(',')}
+  const uri = `${endpointService.cropPlantData}?nutrientBatchIds=${nutrientBatchIds.join(',')}`;
+  const response = await makeRequest<INutrientBatch[]>(uri, {
+    method: 'GET'
   });
 
-  return response.data as INutrientBatch[];
+  return response;
 };

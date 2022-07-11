@@ -1,14 +1,13 @@
-import { getHeaders } from './Header.service';
 import EndpointService from './Endpoint.service';
-import axios from 'axios';
+import { makeRequest } from './Network.service';
 
 const endpointService = new EndpointService();
 
 export const search = async (query: string): Promise<any[]> => {
-  const response = await axios.get(endpointService.search, {
-    headers: getHeaders(),
-    params: {query: encodeURIComponent(query)}
+  const uri = `${endpointService.search}?query=${encodeURIComponent(query)}`;
+  const response = await makeRequest<any[]>(uri, {
+    method: 'GET',
   });
 
-  return response.data as any[];
+  return response;
 };

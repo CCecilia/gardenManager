@@ -1,50 +1,45 @@
 import EndpointService from './Endpoint.service';
 import { IPlant } from '../types/Plant.interface';
-import axios from 'axios';
-import { getHeaders } from './Header.service';
 import { IGrowthLog } from '../types/IGrowthLog';
+import { makeRequest } from './Network.service';
 
-export const getPlantData = async (id?: string): Promise<IPlant[] | IPlant> => {
-  const endpointService = new EndpointService();
-  if (id) {
-    const response = await axios.get(endpointService.getPlantDataById(id), {
-      headers: getHeaders(),
-    });
+const endpointService = new EndpointService();
 
-    return response.data as IPlant;
-  }
-
-  const response = await axios.get(endpointService.allPlantData, {
-    headers: getHeaders(),
+export const getPlantDataById = async (id: string): Promise<IPlant> => {
+  const response = await makeRequest<IPlant>(endpointService.getPlantDataById(id), {
+    method: 'GET',
   });
 
-  return response.data as IPlant[];
+  return response;
+};
+
+export const getPlantData = async (): Promise<IPlant[]> => {
+  const response = await makeRequest<IPlant[]>(endpointService.allPlantData, {
+    method: 'GET',
+  });
+
+  return response;
 };
 
 export const updatePlantData = async (update: Partial<IPlant>): Promise<IPlant> => {
-  const endpointService = new EndpointService();
-
   if (update.growthLogs?.length) {
     delete update.growthLogs;
   }
 
-  const response = await axios.put(endpointService.allPlantData, {...update}, {
-    headers: getHeaders(),
+  const response = await makeRequest<IPlant>(endpointService.allPlantData, {
+    method: 'PUT',
+    body: JSON.stringify(update)
   });
 
-  return response.data as IPlant;
+  return response;
 };
 
 export const deletePlantData = async (plantId: string): Promise<boolean> => {
-  const endpointService = new EndpointService();
-  const response = await axios.delete(endpointService.allPlantData, {
-    headers: getHeaders(),
-    params: {
-      plantId
-    }
+  const uri = `${endpointService.allPlantData}?plantId=${plantId}`;
+  const response = await makeRequest<IPlant>(uri, {
+    method: 'DELETE',
   });
-
-  if (response.status === 200) {
+  if (response) {
     return true;
   }
 
@@ -52,14 +47,15 @@ export const deletePlantData = async (plantId: string): Promise<boolean> => {
 };
 
 export const createGrowthLog = async (plantId: string, numbersOfLeaves: number, heightInches: number, img: string, ): Promise<IGrowthLog> => {
-  const endpointService = new EndpointService();
+  const response = await makeRequest<IGrowthLog>(endpointService.plantGrowthLog, {
+    method: 'GET',
+    body: JSON.stringify({
+      plantId,
+      numbersOfLeaves,
+      heightInches,
+      img
+    })
+  });
 
-  const response = await axios.post(endpointService.plantGrowthLog, {
-    plantId,
-    numbersOfLeaves,
-    heightInches,
-    img
-  }, { headers: getHeaders() });
-
-  return response.data as IGrowthLog;
+  return response;
 };

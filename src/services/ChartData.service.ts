@@ -1,6 +1,5 @@
-import axios from 'axios';
 import EndpointService from './Endpoint.service';
-import { getHeaders } from './Header.service';
+import { makeRequest } from './Network.service';
 
 const endpointService = new EndpointService();
 
@@ -12,23 +11,19 @@ export type ChartData = {
 }
 
 export const getPlantGrowthChartData = async (plantId: string): Promise<ChartData> => {
-  const response = await axios.get(endpointService.plantGrowthChartData, {
-    headers: getHeaders(),
-    params: {
-      plantId
-    }
+  const uri = `${endpointService.plantGrowthChartData}?plantId=${plantId}`;
+  const response = await makeRequest<ChartData>(uri, {
+    method: 'GET',
   });
 
-  return response.data as ChartData;
+  return response;
 };
 
 export const getCropGrowthChartData = async (cropId: string): Promise<ChartData> => {
-  const response = await axios.get(endpointService.cropGrowthChartData, {
-    headers: getHeaders(),
-    params: {
-      cropId
-    }
+  const uri = `${endpointService.cropGrowthChartData}?cropId=${cropId}`;
+  const response = await makeRequest<ChartData>(uri, {
+    method: 'GET',
   });
 
-  return response.data as ChartData;
+  return response;
 };

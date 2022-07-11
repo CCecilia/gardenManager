@@ -3,9 +3,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import EndpointService from '../services/Endpoint.service';
 import { UserModel } from '../services/User.service';
-import axios from 'axios';
-import { getHeaders } from '../services/Header.service';
 import { RoutePaths } from '../types/RoutePaths.enum';
+import { makeRequest } from '../services/Network.service';
 
 interface AuthContextInterface {
   user: UserModel | null;
@@ -31,41 +30,35 @@ export const useProvideAuth = () => {
   const endpointService = new EndpointService();
 
   const signIn = async (email: string, password: string) => {
-    const response = await axios.post(
-      endpointService.signIn,
-      JSON.stringify({
+    const response = await makeRequest<UserModel>(endpointService.signIn, {
+      method: 'GET',
+      body: JSON.stringify({
         email,
         password,
-      }),
-      {
-        headers: getHeaders(),
-      }
-    );
+      })
+    });
 
-    if (response.data) {
-      const userData = response.data;
+    if (response) {
+      const userData = response as any;
 
-      localStorage.setItem('user', JSON.stringify(response.data));
+      localStorage.setItem('user', JSON.stringify(response));
       setUser(userData);
     }
   };
 
   const signUp = async (email: string, password: string) => {
-    const response = await axios.post(
-      endpointService.signUp,
-      JSON.stringify({
+    const response = await makeRequest<UserModel>(endpointService.signUp, {
+      method: 'POST',
+      body: JSON.stringify({
         email,
         password,
-      }),
-      {
-        headers: getHeaders(),
-      }
-    );
+      })
+    });
 
-    if (response.data) {
-      const userData = response.data;
+    if (response) {
+      const userData = response as any;
 
-      localStorage.setItem('user', JSON.stringify(response.data));
+      localStorage.setItem('user', JSON.stringify(response));
       setUser(userData);
     }
   };

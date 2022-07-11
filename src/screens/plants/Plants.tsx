@@ -27,7 +27,7 @@ const Plants: React.FC<Props> = () => {
         };
       };
 
-      const data = (await getPlantData()) as IPlant[];
+      const data = await getPlantData();
       setPlantData(data);
     })();
   }, []);
