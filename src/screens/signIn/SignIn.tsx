@@ -3,7 +3,6 @@ import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 
-import { AxiosError } from 'axios';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../../types/RoutePaths.enum';
@@ -37,18 +36,7 @@ const SignIn: React.FC<Props> = () => {
     setMessage('');
     setLoading(true);
     await auth
-      ?.signIn(email, password)
-      .catch((error: AxiosError<{ message: string }>) => {
-        console.error(error);
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setLoading(false);
-        setMessage(resMessage);
-      });
+      ?.signIn(email, password);
     navigate(RoutePaths.DASHBOARD_ROUTE);
   };
 

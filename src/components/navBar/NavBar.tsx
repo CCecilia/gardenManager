@@ -12,12 +12,7 @@ type Props = {};
 const NavBar: React.FC<Props> = () => {
   const auth = useAuth();
   const navigate = useNavigate();
-
-  let authorizedLinks = false;
-
-  if (auth && auth.user) {
-    authorizedLinks = true;
-  }
+  const authorizedLinks = auth && auth.user;
 
   const handleLinkOnCLick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.preventDefault();
@@ -34,15 +29,24 @@ const NavBar: React.FC<Props> = () => {
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="me-auto">
-        <NavDropdown title="Garden Data" id="collasible-nav-dropdown">
-          <NavDropdown.Item href={RoutePaths.CROPS_ROUTE} onClick={handleLinkOnCLick}>Crops</NavDropdown.Item>
-          <NavDropdown.Item href={RoutePaths.PLANTS_ROUTE} onClick={handleLinkOnCLick}>Plants</NavDropdown.Item>
-          <NavDropdown.Item href={RoutePaths.NUTRIENT_BATCHES_ROUTE} onClick={handleLinkOnCLick}>Nutrients</NavDropdown.Item>
-        </NavDropdown>
-        <NavDropdown title="Analytics" id="collasible-nav-dropdown">
-          <NavDropdown.Item href={RoutePaths.DASHBOARD_ROUTE} onClick={handleLinkOnCLick}>Dashboard</NavDropdown.Item>
-        </NavDropdown>
-        <Nav.Link onClick={auth?.signOut}>Sign Out</Nav.Link>
+          {authorizedLinks ?
+            <>
+              <NavDropdown title="Garden Data" id="collasible-nav-dropdown">
+                <NavDropdown.Item href={RoutePaths.CROPS_ROUTE} onClick={handleLinkOnCLick}>Crops</NavDropdown.Item>
+                <NavDropdown.Item href={RoutePaths.PLANTS_ROUTE} onClick={handleLinkOnCLick}>Plants</NavDropdown.Item>
+                <NavDropdown.Item href={RoutePaths.NUTRIENT_BATCHES_ROUTE} onClick={handleLinkOnCLick}>Nutrients</NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Analytics" id="collasible-nav-dropdown">
+                <NavDropdown.Item href={RoutePaths.DASHBOARD_ROUTE} onClick={handleLinkOnCLick}>Dashboard</NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link onClick={auth?.signOut}>Sign Out</Nav.Link>
+            </>
+            :
+            <>
+              <Nav.Link href={RoutePaths.SIGNIN_ROUTE} onClick={handleLinkOnCLick}>Sign In</Nav.Link>
+              <Nav.Link href={RoutePaths.SIGNUP_ROUTE} onClick={handleLinkOnCLick}>Sign Up</Nav.Link>
+            </>
+          }
       </Nav>
     </Navbar.Collapse>
     </Container>

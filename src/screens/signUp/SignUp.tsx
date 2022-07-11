@@ -3,7 +3,6 @@ import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 
-import { AxiosError } from 'axios';
 import { IUser } from '../../types/User.type';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
@@ -40,17 +39,8 @@ const SignUp: React.FC = () => {
   const handleRegister = async (formValue: IUser) => {
     const { email, password } = formValue;
     await auth
-      ?.signUp(email, password)
-      .catch((error: AxiosError<{ message: string }>) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setMessage(resMessage);
-        setSuccessful(false);
-      });
+      ?.signUp(email, password);
+
     setMessage('success');
     setSuccessful(true);
     navigate(RoutePaths.DASHBOARD_ROUTE);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, /* useNavigate */ } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getCropData, getCropNutrientBatchData, getCropPlantData, updateCropData } from '../../services/Crop.service';
 import { ICrop } from '../../types/Crop.interface';
 import { IPlant } from '../../types/Plant.interface';
@@ -36,7 +36,7 @@ const CropDetails: React.FC<Props> = () => {
       if (auth) {
         const [shouldRedirect, redirectRoute] = auth.shouldRedirect();
 
-        if ( shouldRedirect && redirectRoute ) {
+        if (shouldRedirect && redirectRoute) {
           navigate(redirectRoute);
         };
       };

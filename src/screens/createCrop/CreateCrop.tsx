@@ -1,25 +1,18 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import Unauthorized from '../../components/unauthorized';
 import { useAuth } from '../../hooks/useAuth';
 
 type Props = {};
 
 const CreateCrop: React.FC<Props> = () => {
   const auth = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (auth) {
-      const [shouldRedirect, redirectRoute] = auth.shouldRedirect();
-
-      if ( shouldRedirect && redirectRoute ) {
-        navigate(redirectRoute);
-      }
-    }
-  });
 
   return <>
-    <h1>Create Crop</h1>
+    {auth && auth.user ?
+      <h1>CreateCrop</h1>
+    :
+      <Unauthorized/>
+    }
   </>;
 };
 

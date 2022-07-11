@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ApplicationTable from '../../components/applicationsTable';
 import { useAuth } from '../../hooks/useAuth';
 import { createNutrientBatchApplication, getNutrientBatchData } from '../../services/NutrientBatch.service';
@@ -10,6 +10,7 @@ import DetailsPageHeader from '../../components/detailsPageHeader';
 import NutrientBatchUpdateForm from '../../components/nutrientBatchUpdateForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
+import Unauthorized from '../../components/unauthorized';
 
 type Props = {};
 
@@ -26,7 +27,6 @@ type FormData = {
 
 const NutrientBatchDetails: React.FC<Props> = () => {
   const auth = useAuth();
-  const navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
   const [nutrientBatchData, setNutrientBatchData] = useState<INutrientBatch | null>(null);
@@ -51,12 +51,6 @@ const NutrientBatchDetails: React.FC<Props> = () => {
   useEffect(() => {
     (async () => {
       if (auth) {
-        const [shouldRedirect, redirectRoute] = auth.shouldRedirect();
-
-        if (shouldRedirect && redirectRoute) {
-          navigate(redirectRoute);
-        };
-
         const id = getIdFromLocation(location);
         const data: INutrientBatch = await getNutrientBatchData(id);
         setFormData(Object.assign(formData, data));
@@ -94,95 +88,101 @@ const NutrientBatchDetails: React.FC<Props> = () => {
     setNutrientBatchData(updatedBatchData);
   };
 
-  return <Row>
-    {nutrientBatchData &&
-      <>
-        <Row>
-          <DetailsPageHeader
-            name="Nutrient Batch"
-            id={nutrientBatchData._id}
-            dateCreated={nutrientBatchData.dateCreated}
-          />
-          {showUpdateForm ?
-          <Button
-            style={{
-              width: '10%',
-              textAlign: 'center',
-              position: 'absolute',
-              top: '9vh',
-              right: '10vw',
-              zIndex: '99'
-            }}
-            onClick={closeUpdateForm}
-            variant="outline-danger"
-          >
-            <FontAwesomeIcon icon={faTimes} size="2x" />
-          </Button>
-        :
-          <Button
-            style={{
-              width: '10%',
-              textAlign: 'center',
-              position: 'absolute',
-              top: '9vh',
-              right: '10vw',
-              zIndex: '99'
-            }}
-            onClick={openUpdateForm}
-            variant="outline-warning"
-          >
-            <FontAwesomeIcon icon={faEdit} size="2x" />
-          </Button>
-        }
-        </Row>
-        {showUpdateForm &&
-          <Row>
-            <NutrientBatchUpdateForm
-              nutrientBatchData={nutrientBatchData}
-              updatedPlantDataHandler={handleUpdatedNutrientBatchData}
+  return <>
+    {auth && auth.user ?
+      <Row>
+        {nutrientBatchData &&
+          <>
+            <Row>
+              <DetailsPageHeader
+                name="Nutrient Batch"
+                id={nutrientBatchData._id}
+                dateCreated={nutrientBatchData.dateCreated}
+              />
+              {showUpdateForm ?
+                <Button
+                  style={{
+                    width: '10%',
+                    textAlign: 'center',
+                    position: 'absolute',
+                    top: '9vh',
+                    right: '10vw',
+                    zIndex: '99'
+                  }}
+                  onClick={closeUpdateForm}
+                  variant="outline-danger"
+                >
+                  <FontAwesomeIcon icon={faTimes} size="2x" />
+                </Button>
+                :
+                <Button
+                  style={{
+                    width: '10%',
+                    textAlign: 'center',
+                    position: 'absolute',
+                    top: '9vh',
+                    right: '10vw',
+                    zIndex: '99'
+                  }}
+                  onClick={openUpdateForm}
+                  variant="outline-warning"
+                >
+                  <FontAwesomeIcon icon={faEdit} size="2x" />
+                </Button>
+              }
+            </Row>
+            {showUpdateForm &&
+              <Row>
+                <NutrientBatchUpdateForm
+                  nutrientBatchData={nutrientBatchData}
+                  updatedPlantDataHandler={handleUpdatedNutrientBatchData}
+                />
+              </Row>
+            }
+            <ApplicationTable
+              applications={nutrientBatchData.applications}
+              showModal={handleShow}
             />
-          </Row>
-      }
-      <ApplicationTable
-        applications={nutrientBatchData.applications}
-        showModal={handleShow}
-      />
-        <Modal show={showModal} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>New Application</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <form id="addApplicationForm" onSubmit={handleModalSubmit}>
-              <div className="form-row">
-                <div className="form-group col-12">
-                  <label htmlFor="amountUsed">Amount Used</label>
-                <input
-                    type="number"
-                    id="amountUsed"
-                    name="amountUsed"
-                    placeholder={
-                      amountUsed.toString()
-                    }
-                    className="form-control"
-                    value={amountUsed}
-                    onChange={handleModalOnChange}
-                  />
-                </div>
-              </div>
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="success" type="submit" form="addApplicationForm">
-              Save
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
+            <Modal show={showModal} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>New Application</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <form id="addApplicationForm" onSubmit={handleModalSubmit}>
+                  <div className="form-row">
+                    <div className="form-group col-12">
+                      <label htmlFor="amountUsed">Amount Used</label>
+                      <input
+                        type="number"
+                        id="amountUsed"
+                        name="amountUsed"
+                        placeholder={
+                          amountUsed.toString()
+                        }
+                        className="form-control"
+                        value={amountUsed}
+                        onChange={handleModalOnChange}
+                      />
+                    </div>
+                  </div>
+                </form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant="success" type="submit" form="addApplicationForm">
+                  Save
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </>
+        }
+      </Row>
+      :
+      <Unauthorized />
     }
-  </Row>;
+  </>;
 };
 
 export default NutrientBatchDetails;

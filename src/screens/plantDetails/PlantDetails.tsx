@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { IPlant } from '../../types/Plant.interface';
 import { getPlantDataById } from '../../services/Plant.service';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getIdFromLocation } from '../../utilities/StringHelpers';
 import { useAuth } from '../../hooks/useAuth';
 import DetailsPageHeader from '../../components/detailsPageHeader';
@@ -15,13 +15,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { IGrowthLog } from '../../types/IGrowthLog';
 import PlantGrowthChart from '../../components/plantGrowthChart';
+import Unauthorized from '../../components/unauthorized';
 
 type Props = {
 };
 
 const PlantDetails: React.FC<Props> = () => {
   const auth = useAuth();
-  const navigate = useNavigate();
   const location = useLocation();
   const [plantData, setPlantData] = useState<IPlant | null>(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -29,13 +29,6 @@ const PlantDetails: React.FC<Props> = () => {
 
   useEffect(() => {
     (async () => {
-      if (auth) {
-        const [shouldRedirect, redirectRoute] = auth.shouldRedirect();
-
-        if (shouldRedirect && redirectRoute) {
-          navigate(redirectRoute);
-        };
-      };
       const id = getIdFromLocation(location);
       const data = await getPlantDataById(id);
       console.log(data);
@@ -76,69 +69,72 @@ const PlantDetails: React.FC<Props> = () => {
 
   return (
     <>
-      {plantData &&
-        <Row>
-          <DetailsPageHeader
-            name={plantData.commonName}
-            id={plantData._id}
-            dateCreated={plantData.dateCreated}
-          />
-          {showUpdateForm ?
-            <Button
-              style={{
-                width: '10%',
-                textAlign: 'center',
-                position: 'absolute',
-                top: '9vh',
-                right: '10vw',
-                zIndex: '99'
-              }}
-              onClick={handleEditButtonOnClick}
-              variant="outline-danger"
-            >
-              <FontAwesomeIcon icon={faTimes} size="2x" />
-            </Button>
-          :
-            <Button
-              style={{
-                width: '10%',
-                textAlign: 'center',
-                position: 'absolute',
-                top: '9vh',
-                right: '10vw',
-                zIndex: '99'
-              }}
-              onClick={handleEditButtonOnClick}
-              variant="outline-warning"
-            >
-              <FontAwesomeIcon icon={faEdit} size="2x" />
-            </Button>
+      {auth && auth.user ?
+        <>
+          {plantData &&
+            <Row>
+              <DetailsPageHeader
+                name={plantData.commonName}
+                id={plantData._id}
+                dateCreated={plantData.dateCreated}
+              />
+              {showUpdateForm ?
+                <Button
+                  style={{
+                    width: '10%',
+                    textAlign: 'center',
+                    position: 'absolute',
+                    top: '9vh',
+                    right: '10vw',
+                    zIndex: '99'
+                  }}
+                  onClick={handleEditButtonOnClick}
+                  variant="outline-danger"
+                >
+                  <FontAwesomeIcon icon={faTimes} size="2x" />
+                </Button>
+              :
+                <Button
+                  style={{
+                    width: '10%',
+                    textAlign: 'center',
+                    position: 'absolute',
+                    top: '9vh',
+                    right: '10vw',
+                    zIndex: '99'
+                  }}
+                  onClick={handleEditButtonOnClick}
+                  variant="outline-warning"
+                >
+                  <FontAwesomeIcon icon={faEdit} size="2x" />
+                </Button>
+              }
+              <PlantGrowthChart plantId={plantData._id} />
+              {showUpdateForm &&
+                <PlantUpdateForm
+                  plantData={plantData}
+                  updatedPlantDataHandler={handleUpdatedPlantData}
+                />
+              }
+              {showCreateGrowthLogForm ?
+                <CreateGrowthLogForm
+                  plantData={plantData}
+                  updatedGrowthLogHandler={updateGrowthLogs}
+                  editButtonHandler={handleAddGrowthLogButtonOnClick}
+                  showingCreateGrowthLogForm={showCreateGrowthLogForm}
+                />
+              :
+                <GrowthLogCarousel
+                  plantData={plantData}
+                  editButtonHandler={handleAddGrowthLogButtonOnClick}
+                  showingCreateGrowthLogForm={showCreateGrowthLogForm}
+                />
+              }
+            </Row>
           }
-
-          <PlantGrowthChart plantId={plantData._id} />
-          {showUpdateForm &&
-            <PlantUpdateForm
-              plantData={plantData}
-              updatedPlantDataHandler={handleUpdatedPlantData}
-            />
-          }
-
-
-          {showCreateGrowthLogForm ?
-            <CreateGrowthLogForm
-              plantData={plantData}
-              updatedGrowthLogHandler={updateGrowthLogs}
-              editButtonHandler={handleAddGrowthLogButtonOnClick}
-              showingCreateGrowthLogForm={showCreateGrowthLogForm}
-            />
-          :
-            <GrowthLogCarousel
-              plantData={plantData}
-              editButtonHandler={handleAddGrowthLogButtonOnClick}
-              showingCreateGrowthLogForm={showCreateGrowthLogForm}
-            />
-          }
-        </Row>
+        </>
+      :
+        <Unauthorized/>
       }
     </>
   );

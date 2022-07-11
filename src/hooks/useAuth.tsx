@@ -31,7 +31,7 @@ export const useProvideAuth = () => {
 
   const signIn = async (email: string, password: string) => {
     const response = await makeRequest<UserModel>(endpointService.signIn, {
-      method: 'GET',
+      method: 'POST',
       body: JSON.stringify({
         email,
         password,
@@ -69,6 +69,10 @@ export const useProvideAuth = () => {
   };
 
   function shouldRedirect(): [boolean, string | null] {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      setUser(JSON.parse(userStr));
+    }
     if (user) {
       return [false, null];
     }

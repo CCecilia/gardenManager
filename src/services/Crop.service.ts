@@ -43,7 +43,7 @@ export const getCropPlantData = async (plantIds: string[]): Promise<IPlant[]> =>
 
 
 export const getCropNutrientBatchData = async (nutrientBatchIds: string[]): Promise<INutrientBatch[]> => {
-  const uri = `${endpointService.cropPlantData}?nutrientBatchIds=${nutrientBatchIds.join(',')}`;
+  const uri = `${endpointService.cropNutrientBatchData}?nutrientBatchIds=${nutrientBatchIds.join(',')}`;
   const response = await makeRequest<INutrientBatch[]>(uri, {
     method: 'GET'
   });
