@@ -10,15 +10,19 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://cra.link/PWA
 
-export const registerServiceWorker = async () => {
-  // eslint-disable-next-line no-debugger
-  debugger;
-  if ('serviceWorker' in navigator) {
-    const swUrl = `${process.env.PUBLIC_URL}/sw.js`;
-    const registration = await navigator.serviceWorker.register(swUrl);
-    console.log('service worker registered | ', registration.active);
-  }
-};
+// export const registerServiceWorker = async () => {
+//   // eslint-disable-next-line no-debugger
+//   if ('serviceWorker' in navigator) {
+//     const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+//     console.log({ swUrl });
+//     // eslint-disable-next-line no-debugger
+//     // debugger;
+//     const registration = await navigator.serviceWorker.register(swUrl).catch((error) => console.error(error));
+//     if (registration) {
+//       console.log('service worker registered | ', registration.active);
+//     };
+//   };
+// };
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||

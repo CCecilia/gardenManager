@@ -1,3 +1,6 @@
+
+
+
 /// <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */
 
@@ -14,6 +17,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
+// eslint-disable-next-line no-undef
 declare const self: ServiceWorkerGlobalScope;
 
 clientsClaim();
@@ -27,7 +31,7 @@ precacheAndRoute(self.__WB_MANIFEST);
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
 // https://developers.google.com/web/fundamentals/architecture/app-shell
-const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$');
+const fileExtensionRegexp = /\/[^/?]+\.[^/]+$/;
 registerRoute(
   // Return false to exempt requests from being fulfilled by index.html.
   ({ request, url }: { request: Request; url: URL }) => {
@@ -79,3 +83,18 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+// /// <reference lib="WebWorker" />
+
+// // export empty type because of tsc --isolatedModules flag
+// export type {};
+// // eslint-disable-next-line no-undef
+// declare const self: ServiceWorkerGlobalScope;
+
+// self.addEventListener('install', function (event) {
+//   console.log('ServiceWorker | installed ', event);
+// });
+
+// self.addEventListener('activate', function (event) {
+//   console.log('ServiceWorker | activated ', event);
+//   return self.clients.claim();
+// });

@@ -1,0 +1,19 @@
+@import "../../shared";
+
+.header {
+  height: 35vh;
+  background-image: linear-gradient(
+    to right bottom,
+    rgba($color-primary-light, 0.8),
+    rgba($color-primary-dark, 0.8)
+  ),
+  url('../../../public/images/hydroponic-hero-small.png');
+  background-size: cover;
+  background-position: top;
+  padding-top: 10vh;
+  clip-path: polygon(0 0, 100% 0, 100% 30vh, 0 100%);
+
+  &__text-stack {
+    text-align: center;
+  }
+}
