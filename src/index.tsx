@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import { registerServiceWorker } from './serviceWorkerRegistration';
+import { register } from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -23,5 +23,6 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-registerServiceWorker().then(() => console.log('running'));
+// registerServiceWorker().then(() => console.log('running'));
+register();
 

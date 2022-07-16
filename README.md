@@ -17,7 +17,7 @@
 <h3 align="center">Garden Manager</h3>
 
   <p align="center">
-    Front end repo for the Garden Manager PWA. Which is PWA for tracking garden data then eventually using the data for ai training models.
+    Front end repo for the Garden Manager PWA. Which is PWA for tracking garden data then eventually using the data for ai training models to help nutrient and plant growth management.
     <br />
     <a href="https://github.com/CCecilia/gardenManager"><strong>Explore the docs »</strong></a>
     <br />
