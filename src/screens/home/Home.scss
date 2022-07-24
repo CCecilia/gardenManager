@@ -25,18 +25,14 @@
   &__image-stack {
     &--image {
       width: 100%;
-      height: auto;
+      min-height: 12vh;
     }
 
     &--image-box {
-      margin: 1vh auto;
+      margin: 1.5vh auto;
       height: 10vh;
       width: auto;
       box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-    }
-
-    &--image-box:last-child {
-      margin-top: 3vh;
     }
   }
 
