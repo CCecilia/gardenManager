@@ -7,3 +7,14 @@ export const getIdFromLocation = (location: Location): string => {
 
   return id;
 };
+
+export const validateEmailString = (emailString: string): boolean => {
+  const regexEmail = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+  const results = emailString.match(regexEmail);
+  console.log(results);
+  if (!results) {
+    return false;
+  }
+
+  return results.length !== 0;
+};

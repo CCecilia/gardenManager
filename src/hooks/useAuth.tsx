@@ -2,13 +2,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import EndpointService from '../services/Endpoint.service';
-import { UserModel } from '../services/User.service';
 import { RoutePaths } from '../types/RoutePaths.enum';
 import { makeRequest } from '../services/Network.service';
+import { ISignInResponse } from '../types/SignInResponse.interface';
+import { IUser } from '../types/User.interface';
 
 interface AuthContextInterface {
-  user: UserModel | null;
-  signIn: (email: string, password: string) => Promise<void>;
+  user: IUser | null;
+  signIn: (email: string, password: string) => Promise<ISignInResponse>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => void;
   shouldRedirect: () => [boolean, string | null];
@@ -26,11 +27,11 @@ export const useAuth = () => {
 };
 
 export const useProvideAuth = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<IUser | null>(null);
   const endpointService = new EndpointService();
 
-  const signIn = async (email: string, password: string) => {
-    const response = await makeRequest<UserModel>(endpointService.signIn, {
+  const signIn = async (email: string, password: string): Promise<ISignInResponse> => {
+    const response = await makeRequest<ISignInResponse>(endpointService.signIn, {
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -38,16 +39,18 @@ export const useProvideAuth = () => {
       })
     });
 
-    if (response) {
-      const userData = response as any;
+    if (response && response.success) {
+      const userData = response.userData;
 
       localStorage.setItem('user', JSON.stringify(response));
-      setUser(userData);
+      setUser(userData!);
     }
+
+    return response;
   };
 
   const signUp = async (email: string, password: string) => {
-    const response = await makeRequest<UserModel>(endpointService.signUp, {
+    const response = await makeRequest<IUser>(endpointService.signUp, {
       method: 'POST',
       body: JSON.stringify({
         email,

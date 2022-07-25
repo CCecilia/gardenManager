@@ -1,96 +1,134 @@
-import * as Yup from 'yup';
+import './SignIn.scss';
 
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../../types/RoutePaths.enum';
+import Row from 'react-bootstrap/Row';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignIn } from '@fortawesome/free-solid-svg-icons';
+import { validateEmailString } from '../../utilities/StringHelpers';
 
 type Props = {};
-type InputValues = {
-  email: string;
-  password: string;
-};
+// type InputValues = {
+//   email: string;
+//   password: string;
+// };
 
 const SignIn: React.FC<Props> = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
-  const navigate = useNavigate();
-  const initialValues: InputValues = {
-    email: '',
-    password: '',
-  };
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().required('This field is required!'),
-    password: Yup.string().required('This field is required!'),
-  });
   const auth = useAuth();
+  const emailInputRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [emailInputData, setEmailInputData] = useState<string>('');
+  const [passwordInputData, setPasswordInputData] = useState<string>('');
 
-  if (auth && auth.user) {
-    navigate(RoutePaths.DASHBOARD_ROUTE);
-  };
+  useEffect(() => {
+    if (auth && auth.user) {
+      navigate(RoutePaths.DASHBOARD_ROUTE);
+    };
+  }, []);
 
-  const handleSignIn = async (formValue: InputValues) => {
-    const { email, password } = formValue;
-    setMessage('');
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    console.log('handle submit', emailInputData, passwordInputData, validateEmailString(emailInputData.toLowerCase()));
+    event.preventDefault();
+    
+    if (loading) {
+      return;
+    };
+
     setLoading(true);
-    await auth
-      ?.signIn(email, password);
-    navigate(RoutePaths.DASHBOARD_ROUTE);
+
+    if (emailInputData === '') {
+      setLoading(false);
+      return;
+    };
+
+    if (passwordInputData === '') {
+      setLoading(false);
+      return;
+    };
+
+    if (validateEmailString(emailInputData.toLowerCase())) {
+      const signInResponse = await auth!.signIn(emailInputData, passwordInputData);
+      if (signInResponse.success) {
+        navigate(RoutePaths.DASHBOARD_ROUTE);
+      };
+
+      const { message } = signInResponse;
+      setFormError(message);
+    };
+
+    setLoading(false);
   };
 
-  return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSignIn}
-        >
-          <Form>
-            <div className="form-group">
-              <label htmlFor="email">email</label>
-              <Field name="email" type="text" className="form-control" />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className="alert alert-danger"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <Field name="password" type="password" className="form-control" />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="alert alert-danger"
-              />
-            </div>
-            <div className="form-group">
-              <button
-                type="submit"
-                className="btn btn-primary btn-block"
-                disabled={loading}
-              >
-                {loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span>Login</span>
-              </button>
-            </div>
-            {message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {message}
-                </div>
-              </div>
-            )}
-          </Form>
-        </Formik>
-      </div>
-    </div>
-  );
+  const handleEmailOnChange  = () => {
+    const value = emailInputRef.current?.value;
+
+    if (!emailInputRef) {
+      return;
+    }
+    if (!value) {
+      setEmailInputData('');
+      return;
+    };
+    if (!validateEmailString(value.toLowerCase())) {
+      setEmailInputData(value);
+    };
+  };
+
+
+  const handleOnChange = (event: React.FormEvent<HTMLInputElement>, setStateAction: (data: any) => void) => {
+    const { value } = event.currentTarget;
+    setStateAction(value);
+  };
+
+
+  return (<Row className="sign-in-form">
+    {formError &&
+      <Row className="sign-in-form__error-message">
+        <p className="sign-in-form__error-message--text">{ formError }</p>
+      </Row>
+    }
+    <Row>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label className="sign-in-form__label">Email</Form.Label>
+          <Form.Control
+            id="email"
+            name="email"
+            placeholder="Email"
+            className="form-control sign-in-form__input"
+            value={emailInputData}
+            onChange={handleEmailOnChange}
+            type="email"
+            required={true}
+            ref={emailInputRef}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label className="sign-in-form__label">Password</Form.Label>
+          <Form.Control
+            id="password"
+            name="password"
+            placeholder="Password"
+            className="form-control sign-in-form__input"
+            value={passwordInputData}
+            onChange={(e: any) => handleOnChange(e, setPasswordInputData)}
+            required={true}
+            type="password"
+          />
+        </Form.Group>
+        <Button variant="outline-success" type="submit" className="btn-outline-black btn-lg">
+          Sign In <FontAwesomeIcon icon={faSignIn}/>
+        </Button>
+      </Form>
+    </Row>
+  </Row>);
 };
 
 export default SignIn;

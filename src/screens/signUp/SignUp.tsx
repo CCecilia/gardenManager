@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 
-import { IUser } from '../../types/User.type';
+import { IUser } from '../../types/User.interface';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../../types/RoutePaths.enum';
@@ -14,8 +14,11 @@ const SignUp: React.FC = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const initialValues: IUser = {
+    _id: '',
     email: '',
     password: '',
+    accessToken: '',
+    _v: 0,
   };
 
   if (auth && auth.user) {
