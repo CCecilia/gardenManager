@@ -33,7 +33,7 @@ const SignIn: React.FC<Props> = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     console.log('handle submit', emailInputData, passwordInputData, validateEmailString(emailInputData.toLowerCase()));
     event.preventDefault();
-    
+
     if (loading) {
       return;
     };

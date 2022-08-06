@@ -6,11 +6,12 @@ import { RoutePaths } from '../types/RoutePaths.enum';
 import { makeRequest } from '../services/Network.service';
 import { ISignInResponse } from '../types/SignInResponse.interface';
 import { IUser } from '../types/User.interface';
+import { ISignUpResponse } from '../types/SignUpResponse.interface';
 
 interface AuthContextInterface {
   user: IUser | null;
   signIn: (email: string, password: string) => Promise<ISignInResponse>;
-  signUp: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, confirmPassword: string) => Promise<ISignUpResponse>;
   signOut: () => void;
   shouldRedirect: () => [boolean, string | null];
 }
@@ -42,28 +43,31 @@ export const useProvideAuth = () => {
     if (response && response.success) {
       const userData = response.userData;
 
-      localStorage.setItem('user', JSON.stringify(response));
+      localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData!);
     }
 
     return response;
   };
 
-  const signUp = async (email: string, password: string) => {
-    const response = await makeRequest<IUser>(endpointService.signUp, {
+  const signUp = async (email: string, password: string, confirmPassword: string): Promise<ISignUpResponse> => {
+    const response = await makeRequest<ISignUpResponse>(endpointService.signUp, {
       method: 'POST',
       body: JSON.stringify({
         email,
         password,
+        confirmPassword
       })
     });
 
-    if (response) {
-      const userData = response as any;
+    if (response && response.success) {
+      const userData = response.userData;
 
       localStorage.setItem('user', JSON.stringify(response));
-      setUser(userData);
+      setUser(userData!);
     }
+
+    return response;
   };
 
   const signOut = (): void => {

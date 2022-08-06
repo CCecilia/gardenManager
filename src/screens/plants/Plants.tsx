@@ -41,7 +41,6 @@ const Plants: React.FC<Props> = () => {
         <Unauthorized/>
       }
     </>
-    
   );
 };
 

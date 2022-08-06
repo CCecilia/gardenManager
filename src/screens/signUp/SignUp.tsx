@@ -50,13 +50,18 @@ const SignUp: React.FC = () => {
       return;
     };
 
+    if (confirmPasswordInputData === '') {
+      setLoading(false);
+      return;
+    };
+
     if (validateEmailString(emailInputData.toLowerCase())) {
-      const signInResponse = await auth!.signIn(emailInputData, passwordInputData);
-      if (signInResponse.success) {
+      const signUpResponse = await auth!.signUp(emailInputData, passwordInputData, confirmPasswordInputData);
+      if (signUpResponse.success) {
         navigate(RoutePaths.DASHBOARD_ROUTE);
       };
 
-      const { message } = signInResponse;
+      const { message } = signUpResponse;
       setFormError(message);
     };
 
@@ -95,7 +100,7 @@ const SignUp: React.FC = () => {
 
     if (passwordInputRef.current && confirmPasswordInputRef.current) {
       console.log(passwordInputData, confirmPasswordInputData, passwordInputData.length >= 8 && passwordInputData === confirmPasswordInputData);
-      if (passwordInputData.length >= 8 && passwordInputData === confirmPasswordInputData) {
+      if (passwordInputData.length >= 8 && passwordInputData === value) {
         console.log('password GTG');
         Object.assign(passwordInputRef.current.style, {
           'border-bottom': '0px'
