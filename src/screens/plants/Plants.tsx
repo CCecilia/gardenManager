@@ -23,25 +23,23 @@ const Plants: React.FC<Props> = () => {
     })();
   }, []);
 
-  return (
-    <>
-      {auth && auth.user ?
-        <>
-          <TablePageHeader
-            pageName={PageNames.PLANTS_PAGE}
-            createPageRoute={RoutePaths.CREATE_PLANT_ROUTE}
-          />
-          <Row style={{textAlign: 'center'}}>
-            {plantData &&
-              <PlantsTable plants={plantData}></PlantsTable>
-            }
-          </Row>
-        </>
-      :
-        <Unauthorized/>
-      }
-    </>
-  );
+  return (<Row style={{ paddingLeft: '2rem' }}>
+    {auth && auth.user ?
+      <Row>
+        <TablePageHeader
+          pageName={PageNames.PLANTS_PAGE}
+          createPageRoute={RoutePaths.CREATE_PLANT_ROUTE}
+        />
+        <Row style={{textAlign: 'center'}}>
+          {plantData &&
+            <PlantsTable plants={plantData}></PlantsTable>
+          }
+        </Row>
+      </Row>
+    :
+      <Unauthorized/>
+    }
+  </Row>);
 };
 
 export default Plants;
