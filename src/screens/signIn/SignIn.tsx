@@ -13,10 +13,6 @@ import { faSignIn } from '@fortawesome/free-solid-svg-icons';
 import { validateEmailString } from '../../utilities/StringHelpers';
 
 type Props = {};
-// type InputValues = {
-//   email: string;
-//   password: string;
-// };
 
 const SignIn: React.FC<Props> = () => {
   const auth = useAuth();
