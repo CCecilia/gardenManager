@@ -77,48 +77,84 @@ const SignIn: React.FC<Props> = () => {
       setEmailInputData('');
       return;
     };
-    if (!validateEmailString(value.toLowerCase())) {
-      setEmailInputData(value);
+
+    setEmailInputData(value);
+
+    if (emailInputRef.current) {
+      if (!validateEmailString(value.toLowerCase())) {
+        Object.assign(emailInputRef.current.style, {
+          'border-bottom': '3px solid red'
+        });
+      } else {
+        Object.assign(emailInputRef.current.style, {
+          'border-bottom': '0px'
+        });
+      };
     };
   };
-
 
   const handleOnChange = (event: React.FormEvent<HTMLInputElement>, setStateAction: (data: any) => void) => {
     const { value } = event.currentTarget;
     setStateAction(value);
   };
 
-  const emailOnFocusHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-    const label = document.getElementById('email-label');
-    // const value = emailInputRef.current?.value;
+  const animateLabelUp = (label: HTMLElement) => {
+    label.animate([
+      {translate: '.2rem 4.2rem', opacity: .25},
+      {translate: '.2rem 2rem', opacity: .5},
+      {translate: '.2rem 0rem', opacity: 1},
+    ],
+    {
+      duration: 500,
+    });
+    Object.assign(label.style, {
+      translate: '.2rem 0rem',
+      opacity: '1'
+    });
+  };
 
-    if (label) {
-      label.animate([
-        {translate: '.2rem 4.2rem', opacity: .25},
-        {translate: '.2rem 2rem', opacity: .5},
-        {translate: '.2rem 0rem', opacity: 1},
-      ],
-      {
-        duration: 500,
-        });
-      label.style.translate = '.2rem 0rem';
-      label.style.opacity = '1';
+  const hideLabel = (label: HTMLElement) => {
+    label.animate([
+      {translate: '.2rem 0rem', opacity: 1},
+      {translate: '.2rem 2rem', opacity: .5},
+      {translate: '.2rem 4.2rem', opacity: .25},
+    ],
+    {
+      duration: 500,
+    });
+    Object.assign(label.style, {
+      translate: '.2rem 4.2rem',
+      opacity: '0'
+    });
+  };
+
+  const emailOnFocusHandler = (event: React.FocusEvent<HTMLInputElement>) => {
+    const emailLabel = document.getElementById('email-label');
+    const passwordLabel = document.getElementById('password-label');
+    const emailValue = emailInputRef.current?.value;
+    const passwordValue = passwordInputRef.current?.value;
+
+    if (emailLabel && !emailValue) {
+      animateLabelUp(emailLabel);
+    };
+
+    if (passwordLabel && !passwordValue) {
+      hideLabel(passwordLabel);
     };
   };
 
   const passwordOnFocusHandler = (event: React.FocusEvent<HTMLInputElement>) => {
     const label = document.getElementById('password-label');
-    if (label) {
-      label.animate([
-        {translate: '.2rem 4.2rem', opacity: .25},
-        {translate: '.2rem 2rem', opacity: .5},
-        {translate: '.2rem 0rem', opacity: 1},
-      ],
-      {
-        duration: 500,
-        });
-      label.style.translate = '.2rem 0rem';
-      label.style.opacity = '1';
+    const emailLabel = document.getElementById('email-label');
+    const emailValue = emailInputRef.current?.value;
+    const passwordValue = passwordInputRef.current?.value;
+
+    if (label && !passwordValue) {
+      animateLabelUp(label);
+    };
+
+    if (emailLabel && !emailValue) {
+      hideLabel(emailLabel);
     };
   };
 
