@@ -21,6 +21,7 @@ type Props = {};
 const SignIn: React.FC<Props> = () => {
   const auth = useAuth();
   const emailInputRef = useRef<HTMLInputElement | null>(null);
+  const passwordInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<string | null>(null);
@@ -87,6 +88,39 @@ const SignIn: React.FC<Props> = () => {
     setStateAction(value);
   };
 
+  const emailOnFocusHandler = (event: React.FocusEvent<HTMLInputElement>) => {
+    const label = document.getElementById('email-label');
+    // const value = emailInputRef.current?.value;
+
+    if (label) {
+      label.animate([
+        {translate: '.2rem 4.2rem', opacity: .25},
+        {translate: '.2rem 2rem', opacity: .5},
+        {translate: '.2rem 0rem', opacity: 1},
+      ],
+      {
+        duration: 500,
+        });
+      label.style.translate = '.2rem 0rem';
+      label.style.opacity = '1';
+    };
+  };
+
+  const passwordOnFocusHandler = (event: React.FocusEvent<HTMLInputElement>) => {
+    const label = document.getElementById('password-label');
+    if (label) {
+      label.animate([
+        {translate: '.2rem 4.2rem', opacity: .25},
+        {translate: '.2rem 2rem', opacity: .5},
+        {translate: '.2rem 0rem', opacity: 1},
+      ],
+      {
+        duration: 500,
+        });
+      label.style.translate = '.2rem 0rem';
+      label.style.opacity = '1';
+    };
+  };
 
   return (<Row className="sign-in-form">
     {formError &&
@@ -97,7 +131,7 @@ const SignIn: React.FC<Props> = () => {
     <Row>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
-          <Form.Label className="sign-in-form__label">Email</Form.Label>
+          <Form.Label id="email-label" className="sign-in-form__label">Email</Form.Label>
           <Form.Control
             id="email"
             name="email"
@@ -105,13 +139,14 @@ const SignIn: React.FC<Props> = () => {
             className="form-control sign-in-form__input"
             value={emailInputData}
             onChange={handleEmailOnChange}
+            onFocus={emailOnFocusHandler}
             type="email"
             required={true}
             ref={emailInputRef}
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label className="sign-in-form__label">Password</Form.Label>
+          <Form.Label id="password-label" className="sign-in-form__label">Password</Form.Label>
           <Form.Control
             id="password"
             name="password"
@@ -119,8 +154,10 @@ const SignIn: React.FC<Props> = () => {
             className="form-control sign-in-form__input"
             value={passwordInputData}
             onChange={(e: any) => handleOnChange(e, setPasswordInputData)}
+            onFocus={passwordOnFocusHandler}
             required={true}
             type="password"
+            ref={passwordInputRef}
           />
         </Form.Group>
         <Button variant="outline-success" type="submit" className="btn-outline-black btn-lg">
